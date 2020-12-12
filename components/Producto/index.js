@@ -1,99 +1,176 @@
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaStar } from "react-icons/fa";
+
 export default function index(props) {
   return (
-    <>
-      <article key={props.key} className="card product_card">
-        <div className="image_container">
-          <div className="text">{props.marca}</div>
+    <article key={props.key} className="card">
+      <div
+        itemscope
+        itemtype="https://schema.org/Product"
+        className="card_container"
+      >
+        <div className="card_nombre">
+          <span itemprop="name">{props.nombre}</span>
         </div>
+        <img
+          itemprop="image"
+          src={`/productos/${props.imagen_thumb_url}`}
+          alt={props.nombre}
+          className="card_img"
+        />
+        <div className="card_body">
+          <div
+            itemprop="aggregateRating"
+            itemscope
+            itemtype="https://schema.org/AggregateRating"
+            className="card_text_calification"
+          >
+            <span itemprop="ratingValue">{props.rated}</span>/5
+            <FaStar />
+          </div>
+          <div>{props.marca}</div>
+        </div>
+        <div className="card_info">
+          <div>
+            {props.categoria && props.categoria ? (
+              <div>
+                <strong>Categoria: </strong>
+                {props.categoria}
+              </div>
+            ) : (
+              <></>
+            )}
 
-        <div className="product_text">
-          <div className="product_text_category">{props.categoria}</div>
-          <div className="product_text_title">{props.nombre}</div>
-          <div className="product_text_description">{props.descripcion}</div>
+            <div>
+              {props.valor_onz.medida && props.valor_onz.medida ? (
+                <>
+                  <br />
+                  <strong>Onz: </strong>
+                  {props.valor_onz.medida} x {props.valor_onz.valor}
+                </>
+              ) : (
+                <></>
+              )}
+
+              {props.valor_litro && props.valor_litro ? (
+                <>
+                  <br />
+                  <strong>Litro: </strong>
+                  {props.valor_litro}
+                </>
+              ) : (
+                <></>
+              )}
+
+              {props.valor_galon && props.valor_galon ? (
+                <>
+                  <br />
+                  <strong>Galón: </strong>
+                  {props.valor_galon}
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div>
+              {props.aromas && props.aromas ? (
+                <div>
+                  <br />
+                  <strong>Aromas: </strong>
+
+                  {props.aromas.map((e) => {
+                    return <span> {e}, </span>;
+                  })}
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
         </div>
-        <div>
-          <button>
-            Añadir <FaShoppingCart />
+        <div className="card_footer">
+          <button className="button">
+            Añadir a <FaShoppingCart />
           </button>
         </div>
-      </article>
+      </div>
+
       <style jsx>{`
         article {
-          border-radius: 1em;
-        }
-        .card {
-        }
-        .image_container {
-          background-image: url(${`/productos/${props.imagen_thumb_url}`}); /* The image used - important! */
-          background-size: cover;
-          position: relative;
-          min-height: 300px;
-        }
-        .text {
-          background-color: #ffffffaa;
-          color: black;
-          margin: 0 auto;
-          width: 100%;
-          text-align: center;
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          mix-blend-mode: screen;
         }
 
-        .product_card {
-          box-shadow: 0 2px 7px #dfdfdf;
-          background: #fafafa;
+        .card {
+          align-items: stretch;
+          background: #fff;
+          border-radius: 10px;
+          box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+          color: #c4c4c4;
+          height: 100%;
+          overflow: hidden;
         }
-        .product_text {
-          font-size: 15px;
-          line-height: 22px;
-          margin-bottom: 18px;
-          color: #999;
-          min-height: 340px;
+        .card_container {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+        }
+
+        .card_nombre {
+          background: #0d3362;
+          color: white;
+          text-align: center;
           padding: 1em;
+          height: 70px;
+          font-weight: 600;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .card_img {
+          width: 100%;
+        }
+
+        .card_text_calification {
+          color: #f16722;
+          text-align: right;
+        }
+        .card_body {
+          padding: 1em;
+          color: #0d3362;
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+        }
+        .card_description {
           text-align: justify;
         }
-        .product_text_title {
-          font-weight: 500;
-          display: block;
-          margin-bottom: 18px;
-          text-transform: uppercase;
-          color: #363636;
-          text-decoration: none;
-          transition: 0.3s;
-          text-align: center;
-        }
-        .product_text_title :hover {
-          color: #104c97;
+        .card_info {
+          padding: 1em;
+          color: #474744;
+          height: 170px;
         }
 
-        .product_text_category {
-          display: block;
-          font-size: 12px;
-          font-weight: 700;
-          text-transform: uppercase;
-          color: #f16722;
-          margin-bottom: 18px;
-        }
-
-        .card button {
-          border: none;
-          outline: 0;
-          padding: 12px;
-          color: white;
-          background-color: #104c97;
-          text-align: center;
-          cursor: pointer;
+        .card_footer {
+          padding: 22px;
+          position: relative;
+          bottom: 0;
           width: 100%;
         }
 
-        .card button:hover {
-          opacity: 0.7;
+        .button {
+          padding: 20px;
+          border: 1px solid #0d3362;
+          background: #f0f0f0;
+          position: relative;
+          outline: none;
+          border-radius: 5px;
+          color: #292d48;
+          font-size: 18px;
+          width: 100%;
+        }
+        .button:hover {
+          background: #0d3362;
+          color: white;
         }
       `}</style>
-    </>
+    </article>
   );
 }

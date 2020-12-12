@@ -2,7 +2,7 @@ import style from "./navbar.module.css";
 import Link from "next/link";
 import { items } from "./items";
 import { useState } from "react";
-import { FaShoppingCart } from "react-icons/fa";
+import Cart from "components/Cart";
 
 export default function navbar() {
   const [menuStatus, setMenuStatus] = useState(false);
@@ -49,9 +49,7 @@ export default function navbar() {
               })}
               <li>
                 <Link href="/cart">
-                  <a>
-                    <FaShoppingCart className={style.navbarLink} />
-                  </a>
+                  <Cart className={`${style.navbarLink} ${style.carrito}`} />
                 </Link>
               </li>
             </ul>
