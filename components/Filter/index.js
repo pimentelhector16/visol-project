@@ -11,8 +11,6 @@ export default function index(props) {
               <option value="">Seleccione</option>
               <option value="lowest">Menor Precio</option>
               <option value="highest">Mayor Precio</option>
-              <option value="marca">Marca</option>
-              <option value="categoria">Categoria</option>
             </select>
           </div>
           <div className="item filter-size">

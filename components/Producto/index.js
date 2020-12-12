@@ -112,7 +112,6 @@ export default function index(props) {
           border-radius: 10px;
           box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
           color: #c4c4c4;
-          height: 100%;
           overflow: hidden;
         }
         .card_container {
