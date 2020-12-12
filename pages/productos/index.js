@@ -129,7 +129,7 @@ export default function index() {
             width: 100%;
           }
           aside {
-            padding: 2em;
+            padding: 1em;
           }
         `}</style>
       </main>
