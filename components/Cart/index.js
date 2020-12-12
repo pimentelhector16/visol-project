@@ -1,107 +1,54 @@
 import { FaShoppingCart } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "hooks/useContext";
 
 export default function index() {
+  const [cart, setCart] = useContext(CartContext);
+
+  useEffect(() => {
+    console.log("evento Ocurriendo");
+  }, []);
+
   return (
     <>
-      <div>
-        <a href="#" id="cart">
-          <FaShoppingCart />
-          <span className="badge">3</span>
-        </a>
-      </div>
+      <section>
+        <article>
+          <div className="cart_title">
+            Carrito de Compras
+            <FaShoppingCart />
+          </div>
+          <div className="cart_body">lista de productos</div>
+          <div className="cart_footer">Footer</div>
+        </article>
+      </section>
       <style jsx>{`
-        .badge {
-          background-color: #f16722;
-          border-radius: 10px;
+        section {
+          padding: 0.5em;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        .cart_title {
+          background: #0d3362;
           color: white;
-          display: inline-block;
-          font-size: 12px;
-          line-height: 1;
-          padding: 3px 7px;
-          margin-top: -5px;
+          padding: 1em;
+          height: 49px;
+          display: flex;
+          justify-content: center;
           text-align: center;
-          vertical-align: middle;
-          white-space: nowrap;
         }
-        .shopping-cart {
-          margin: 20px 0;
-          float: right;
-          background: white;
-          width: 320px;
-          position: relative;
-          border-radius: 3px;
-          padding: 20px;
+        .cart_body {
         }
-        .shopping-cart .shopping-cart-header {
-          border-bottom: 1px solid #e8e8e8;
-          padding-bottom: 15px;
-        }
-        .shopping-cart .shopping-cart-header .shopping-cart-total {
-          float: right;
-        }
-        .shopping-cart .shopping-cart-items {
-          padding-top: 20px;
-        }
-        .shopping-cart .shopping-cart-items li {
-          margin-bottom: 18px;
-        }
-        .shopping-cart .shopping-cart-items img {
-          float: left;
-          margin-right: 12px;
-        }
-        .shopping-cart .shopping-cart-items .item-name {
-          display: block;
-          padding-top: 10px;
-          font-size: 16px;
-        }
-        .shopping-cart .shopping-cart-items .item-price {
-          color: #6394f8;
-          margin-right: 8px;
-        }
-        .shopping-cart .shopping-cart-items .item-quantity {
-          color: #abb0be;
-        }
-
-        .shopping-cart:after {
-          bottom: 100%;
-          left: 89%;
-          border: solid transparent;
-          content: " ";
-          height: 0;
-          width: 0;
-          position: absolute;
-          pointer-events: none;
-          border-bottom-color: white;
-          border-width: 8px;
-          margin-left: -8px;
-        }
-
-        .cart-icon {
-          color: #515783;
-          font-size: 24px;
-          margin-right: 7px;
-          float: left;
-        }
-
-        .button {
-          background: #6394f8;
+        .cart_footer {
+          display: flex;
+          justify-content: center;
+          text-align: center;
+          background: #0d3362;
           color: white;
-          text-align: center;
-          padding: 12px;
-          text-decoration: none;
-          display: block;
-          border-radius: 3px;
-          font-size: 16px;
-          margin: 25px 0 15px 0;
-        }
-        .button:hover {
-          background: #729ef9;
-        }
-
-        .clearfix:after {
-          content: "";
-          display: table;
-          clear: both;
+          padding: 1em;
+          height: 49px;
         }
       `}</style>
     </>

@@ -20,6 +20,8 @@ export const productos = [
     valor_litro: "65.00",
     moneda: "Q",
     rated: 3.5,
+    availableSizes: ["onz", "litro"],
+    precio: 28.0,
   },
   {
     id: "2",
@@ -41,6 +43,8 @@ export const productos = [
     moneda: "Q",
     rated: 3.5,
     aromas: ["Canela", "Primaveral", "Fresh", "Sweet Air", "granada"],
+    availableSizes: ["onz", "galon"],
+    precio: 35.0,
   },
   {
     id: "3",
@@ -60,6 +64,8 @@ export const productos = [
     moneda: "Q",
     rated: 3.5,
     aromas: ["Fresh", "Manzana Verde", "Granada"],
+    availableSizes: ["onz", "galon"],
+    precio: 25.0,
   },
   {
     id: "4",
@@ -79,6 +85,8 @@ export const productos = [
     moneda: "Q",
     rated: 3.5,
     aromas: ["Limón"],
+    availableSizes: ["onz", "galon"],
+    precio: 20.0,
   },
   {
     id: "5",
@@ -99,6 +107,8 @@ export const productos = [
     valor_litro: "65.00",
     moneda: "Q",
     rated: 3.5,
+    availableSizes: ["onz", "litro"],
+    precio: 28.0,
   },
   {
     id: "6",
@@ -119,6 +129,8 @@ export const productos = [
     moneda: "Q",
     rated: 5,
     aromas: ["Canela", "Primaveral", "Fresh", "Sweet Air", "granada"],
+    availableSizes: ["onz", "galon"],
+    precio: 35.0,
   },
   {
     id: "7",
@@ -136,6 +148,8 @@ export const productos = [
     moneda: "Q",
     rated: 4,
     aromas: ["Fresh", "Manzana Verde", "Granada"],
+    availableSizes: ["onz", "galon"],
+    precio: 25.0,
   },
   {
     id: "8",
@@ -153,5 +167,7 @@ export const productos = [
     moneda: "Q",
     rated: 3,
     aromas: ["Limón"],
+    availableSizes: ["onz", "galon"],
+    precio: 20.0,
   },
 ];

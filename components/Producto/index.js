@@ -29,23 +29,30 @@ export default function index(props) {
           </div>
           <div>{props.marca}</div>
         </div>
+        <div className="card_categoria">
+          {props.categoria && props.categoria ? (
+            <div>
+              <strong>Categoria: </strong>
+              {props.categoria}
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
         <div className="card_info">
-          <div>
-            {props.categoria && props.categoria ? (
-              <div>
-                <strong>Categoria: </strong>
-                {props.categoria}
-              </div>
-            ) : (
-              <></>
-            )}
+          <div className="card_info_precio">
+            {props.moneda}
+            {props.valor_onz.valor}
+          </div>
 
+          <div>
             <div>
               {props.valor_onz.medida && props.valor_onz.medida ? (
                 <>
                   <br />
-                  <strong>Onz: </strong>
-                  {props.valor_onz.medida} x {props.valor_onz.valor}
+                  <strong>Onzas: </strong>
+                  {props.valor_onz.medida} x {props.moneda}
+                  {props.valor_onz.valor}
                 </>
               ) : (
                 <></>
@@ -87,9 +94,10 @@ export default function index(props) {
             </div>
           </div>
         </div>
+
         <div className="card_footer">
-          <button className="button">
-            Añadir a <FaShoppingCart />
+          <button className="button" value={props.id} onClick={props.onClick}>
+            Añadir <FaShoppingCart />
           </button>
         </div>
       </div>
@@ -133,11 +141,16 @@ export default function index(props) {
           text-align: right;
         }
         .card_body {
-          padding: 1em;
+          padding: 0.5em;
           color: #0d3362;
           display: flex;
           flex-direction: row-reverse;
           justify-content: space-between;
+        }
+        .card_categoria {
+          color: #0d3362;
+          text-align: center;
+          font-size: 1em;
         }
         .card_description {
           text-align: justify;
@@ -146,6 +159,13 @@ export default function index(props) {
           padding: 1em;
           color: #474744;
           height: 170px;
+        }
+        .card_info_precio {
+          background: #f16722;
+          padding: 0.5em;
+          font-weight: 700;
+          color: white;
+          text-align: center;
         }
 
         .card_footer {

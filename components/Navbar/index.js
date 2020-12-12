@@ -2,7 +2,6 @@ import style from "./navbar.module.css";
 import Link from "next/link";
 import { items } from "./items";
 import { useState } from "react";
-import Cart from "components/Cart";
 
 export default function navbar() {
   const [menuStatus, setMenuStatus] = useState(false);
@@ -47,11 +46,6 @@ export default function navbar() {
                   </li>
                 );
               })}
-              <li>
-                <Link href="/cart">
-                  <Cart className={`${style.navbarLink} ${style.carrito}`} />
-                </Link>
-              </li>
             </ul>
             <div className={style.icon} onClick={handleMenuOpen}>
               <span>
