@@ -18,6 +18,10 @@ export default function index() {
     size: "",
   });
 
+  const createOrder = (order) => {
+    alert("Necesito procesar orden del cliente: " + order.nombre);
+  };
+
   const sortProducts = (e) => {
     const sort = e.target.value;
     setState((state) => ({
@@ -117,7 +121,11 @@ export default function index() {
             <Products products={state.products} addToCart={addToCart} />
           </section>
           <aside>
-            <Cart cartItems={state.cartItems} removeFromCart={removeFromCart} />
+            <Cart
+              cartItems={state.cartItems}
+              removeFromCart={removeFromCart}
+              createOrder={createOrder}
+            />
           </aside>
         </div>
         <style jsx>{`
