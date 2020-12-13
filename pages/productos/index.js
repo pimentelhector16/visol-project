@@ -2,13 +2,18 @@ import Head from "next/head";
 import { productos } from "pages/api";
 import Products from "components/Products";
 import Cart from "components/Cart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Filter from "components/Filter";
 
 export default function index() {
   const [state, setState] = useState({
     products: productos,
-    cartItems: [],
+    cartItems:
+      typeof window !== "undefined"
+        ? window.localStorage.getItem("cartItems")
+          ? JSON.parse(window.localStorage.getItem("cartItems"))
+          : []
+        : [],
     sort: "",
     size: "",
   });
@@ -63,6 +68,10 @@ export default function index() {
 
     setState({ ...state, cartItems });
   };
+
+  useEffect(() => {
+    window.localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+  });
 
   const removeFromCart = (product) => {
     const cartItems = state.cartItems.slice();
