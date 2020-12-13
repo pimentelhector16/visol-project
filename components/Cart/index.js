@@ -1,7 +1,33 @@
 import { FaShoppingCart } from "react-icons/fa";
 import formatCurrency from "components/Utils/utils";
+import { useState } from "react";
 
 export default function index(props) {
+  const [state, setState] = useState({ showCheckout: false });
+  const [inputState, setInputState] = useState({
+    email: "",
+    nombre: "",
+    direccion: "",
+  });
+  const createOrder = (e) => {
+    e.preventDefault();
+    const order = {
+      email: inputState.email,
+      nombre: inputState.nombre,
+      direccion: inputState.direccion,
+      cartItems: props.cartItems,
+    };
+
+    props.createOrder(order);
+    console.log(inputState);
+  };
+  const handleInput = (e) => {
+    e.preventDefault();
+    setInputState({
+      ...inputState,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <>
       <section>
@@ -54,11 +80,57 @@ export default function index(props) {
                   props.cartItems.reduce((a, c) => a + c.precio * c.count, 0)
                 )}
               </div>
-
-              <button className="button proceder" onClick={() => {}}>
-                Presupuestar
-              </button>
+              {!state.showCheckout && (
+                <button
+                  className="button proceder"
+                  onClick={() => {
+                    setState({ showCheckout: true });
+                  }}
+                >
+                  Presupuestar
+                </button>
+              )}
             </div>
+            {state.showCheckout && (
+              <div className="cart_form">
+                <form onSubmit={createOrder}>
+                  <ul className="form-container">
+                    <li>
+                      <label>Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        onChange={handleInput}
+                      />
+                    </li>
+                    <li>
+                      <label>Nombre</label>
+                      <input
+                        type="text"
+                        name="nombre"
+                        required
+                        onChange={handleInput}
+                      />
+                    </li>
+                    <li>
+                      <label>Dirección</label>
+                      <input
+                        type="text"
+                        name="direccion"
+                        required
+                        onChange={handleInput}
+                      />
+                    </li>
+                    <li>
+                      <button type="submit" className="button proceder">
+                        Confirmar{" "}
+                      </button>
+                    </li>
+                  </ul>
+                </form>
+              </div>
+            )}
           </>
         )}
       </section>
@@ -111,22 +183,36 @@ export default function index(props) {
         .button {
           background-color: #e7e7e7;
           color: black;
-          padding: 0.3em;
+
           border-radius: 12px;
         }
         .proceder_cart {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 0.5em;
-          width: 100%;
+          padding: 1em;
+          min-width: 390px;
         }
         .proceder {
           background-color: #0d3362;
           color: white;
           padding: 0.5em;
           border-radius: 12px;
-          margin-left: 1em;
+        }
+
+        /* FORM CHECKOUT */
+        form {
+          width: 100%;
+        }
+        .form-container {
+          width: 100%;
+          padding: 0;
+          list-style: none;
+        }
+        .form-container li {
+          display: flex;
+          flex-direction: column;
+          padding: 1em;
         }
       `}</style>
     </>
