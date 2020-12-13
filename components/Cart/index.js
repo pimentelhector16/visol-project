@@ -14,7 +14,7 @@ export default function index(props) {
         ) : (
           <>
             <p className="cart_text">
-              Tienes {props.cartItems.length} en el Carrito
+              {props.cartItems.length} Productos en el Carrito
             </p>
             <div className="cart_body">
               <div className="cart_items">
