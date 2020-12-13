@@ -6,11 +6,7 @@ export default function index(props) {
     <>
       {props.products.map((product) => (
         <article key={product.key} className="card">
-          <div
-            itemscope
-            itemtype="https://schema.org/Product"
-            className="card_container"
-          >
+          <div itemtype="https://schema.org/Product" className="card_container">
             <div className="card_nombre">
               <span itemprop="name">{product.nombre}</span>
             </div>
@@ -23,7 +19,6 @@ export default function index(props) {
             <div className="card_body">
               <div
                 itemprop="aggregateRating"
-                itemscope
                 itemtype="https://schema.org/AggregateRating"
                 className="card_text_calification"
               >
