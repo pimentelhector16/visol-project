@@ -1,8 +1,7 @@
 .top {
-  position: fixed;
+  position: relative;
   top: 0;
   width: 100vw;
-  z-index: 6;
   
 }
 
@@ -10,7 +9,6 @@
   background: linear-gradient(#104c97 0%, #0d3362 100%);
   border-bottom: 1px solid var(--main-primary);
   display: flex;
-  position: sticky;
   top: 0;
   
 }
