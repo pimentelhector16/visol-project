@@ -1,6 +1,7 @@
 import { FaShoppingCart } from "react-icons/fa";
 import formatCurrency from "components/Utils/utils";
 import { useState } from "react";
+import Fade from "react-reveal/Fade";
 
 export default function index(props) {
   const [state, setState] = useState({ showCheckout: false });
@@ -44,33 +45,38 @@ export default function index(props) {
             </p>
             <div className="cart_body">
               <div className="cart_items">
-                <ul>
-                  {props.cartItems.map((item) => {
-                    return (
-                      <li key={item.id} className="cart_item">
-                        <div>
-                          <img
-                            className="cart_item_img"
-                            src={`/productos/${item.imagen_thumb_url}`}
-                            alt={item.nombre}
-                          />
-                        </div>
-                        <div>
-                          <div>{item.nombre}</div>
-                          <div className="right">
-                            {formatCurrency(item.precio)} x {item.count}
-                            <button
-                              className="button"
-                              onClick={() => props.removeFromCart(item)}
-                            >
-                              Remover
-                            </button>
+                <Fade left cascade>
+                  <ul>
+                    {props.cartItems.map((item) => {
+                      return (
+                        <li key={item.id} className="cart_item">
+                          <div>
+                            <img
+                              className="cart_item_img"
+                              src={`/productos/${item.imagen_thumb_url}`}
+                              alt={item.nombre}
+                            />
                           </div>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
+                          <div>
+                            <div className="text">{item.nombre}</div>
+                            <div className="right">
+                              <div className="cart_item_text">
+                                {formatCurrency(item.precio)} x {item.count}
+                              </div>
+
+                              <button
+                                className="button "
+                                onClick={() => props.removeFromCart(item)}
+                              >
+                                Remover
+                              </button>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </Fade>
               </div>
             </div>
             <div className="proceder_cart">
@@ -91,45 +97,48 @@ export default function index(props) {
                 </button>
               )}
             </div>
+
             {state.showCheckout && (
-              <div className="cart_form">
-                <form onSubmit={createOrder}>
-                  <ul className="form-container">
-                    <li>
-                      <label>Email</label>
-                      <input
-                        type="email"
-                        name="email"
-                        required
-                        onChange={handleInput}
-                      />
-                    </li>
-                    <li>
-                      <label>Nombre</label>
-                      <input
-                        type="text"
-                        name="nombre"
-                        required
-                        onChange={handleInput}
-                      />
-                    </li>
-                    <li>
-                      <label>Dirección</label>
-                      <input
-                        type="text"
-                        name="direccion"
-                        required
-                        onChange={handleInput}
-                      />
-                    </li>
-                    <li>
-                      <button type="submit" className="button proceder">
-                        Confirmar{" "}
-                      </button>
-                    </li>
-                  </ul>
-                </form>
-              </div>
+              <Fade right cascade>
+                <div className="cart_form">
+                  <form onSubmit={createOrder}>
+                    <ul className="form-container">
+                      <li>
+                        <label>Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          required
+                          onChange={handleInput}
+                        />
+                      </li>
+                      <li>
+                        <label>Nombre</label>
+                        <input
+                          type="text"
+                          name="nombre"
+                          required
+                          onChange={handleInput}
+                        />
+                      </li>
+                      <li>
+                        <label>Dirección</label>
+                        <input
+                          type="text"
+                          name="direccion"
+                          required
+                          onChange={handleInput}
+                        />
+                      </li>
+                      <li>
+                        <button type="submit" className="button proceder">
+                          Confirmar{" "}
+                        </button>
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+              </Fade>
             )}
           </>
         )}
@@ -177,15 +186,21 @@ export default function index(props) {
         .cart_item div:last-child {
           flex: 1;
         }
+        .text {
+          padding: 1em;
+          margin-left: 1em;
+        }
         .right {
           text-align: right;
+          padding: 1em;
         }
         .button {
-          background-color: #e7e7e7;
-          color: black;
-
-          border-radius: 12px;
+          background-color: #0d3362;
+          color: white;
+          padding: 0.2em;
+          border-radius: 1em;
         }
+
         .proceder_cart {
           display: flex;
           justify-content: space-between;
@@ -199,7 +214,9 @@ export default function index(props) {
           padding: 0.5em;
           border-radius: 12px;
         }
-
+        .cart_item_text {
+          padding-right: 1em;
+        }
         /* FORM CHECKOUT */
         form {
           width: 100%;

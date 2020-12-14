@@ -145,7 +145,7 @@ export default function index() {
             grid-gap: 1em;
             justify-content: space-around;
             align-items: flex-start;
-            align-content: center;
+            align-content: flex-start;
             width: 100%;
           }
           .filter {
