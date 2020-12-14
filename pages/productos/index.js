@@ -15,7 +15,7 @@ export default function index() {
           : []
         : [],
     sort: "",
-    size: "",
+    filter: "",
   });
 
   const createOrder = (order) => {
@@ -47,12 +47,12 @@ export default function index() {
 
   const filterProducts = (e) => {
     e.target.value === ""
-      ? setState({ ...state, size: e.target.value, products: productos })
+      ? setState({ ...state, filter: e.target.value, products: productos })
       : setState({
           ...state,
-          size: e.target.value,
+          filter: e.target.value,
           products: productos.filter(
-            (product) => product.availableSizes.indexOf(e.target.value) >= 0
+            (producto) => producto.categoria.indexOf(e.target.value) >= 0
           ),
         });
   };
@@ -105,19 +105,19 @@ export default function index() {
       </Head>
 
       <main>
-        <div className="filter">
-          {state.products && (
-            <Filter
-              count={state.products.length}
-              size={state.size}
-              sort={state.sort}
-              filterProducts={filterProducts}
-              sortProducts={sortProducts}
-            />
-          )}
-        </div>
         <div className="main">
           <section>
+            <div className="filter">
+              {state.products && (
+                <Filter
+                  count={state.products.length}
+                  filter={state.filter}
+                  sort={state.sort}
+                  filterProducts={filterProducts}
+                  sortProducts={sortProducts}
+                />
+              )}
+            </div>
             <Products products={state.products} addToCart={addToCart} />
           </section>
           <aside>
@@ -140,26 +140,21 @@ export default function index() {
 
           section {
             padding: 1em;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            grid-gap: 1em;
-            justify-content: space-around;
-            align-items: flex-start;
-            align-content: flex-start;
             width: 100%;
+            min-width: 70vw;
           }
           .filter {
             width: 100%;
             display: flex;
-            flex-wrap: wrap;
             flex-direction: row;
             padding: 0.5em;
-            justify-content: flex-start;
+            justify-content: space-around;
             align-items: center;
           }
           aside {
-            padding: 1em;
-            width: 400px;
+            padding-top: 2em;
+            min-width: 28vw;
+            margin: 0 auto;
           }
 
           @media (max-width: 800px) {

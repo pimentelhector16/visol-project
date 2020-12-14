@@ -78,24 +78,24 @@ export default function index(props) {
                   </ul>
                 </Fade>
               </div>
-            </div>
-            <div className="proceder_cart">
-              <div>
-                Total:{" "}
-                {formatCurrency(
-                  props.cartItems.reduce((a, c) => a + c.precio * c.count, 0)
+              <div className="proceder_cart">
+                <div>
+                  Total:{" "}
+                  {formatCurrency(
+                    props.cartItems.reduce((a, c) => a + c.precio * c.count, 0)
+                  )}
+                </div>
+                {!state.showCheckout && (
+                  <button
+                    className="button proceder"
+                    onClick={() => {
+                      setState({ showCheckout: true });
+                    }}
+                  >
+                    Presupuestar
+                  </button>
                 )}
               </div>
-              {!state.showCheckout && (
-                <button
-                  className="button proceder"
-                  onClick={() => {
-                    setState({ showCheckout: true });
-                  }}
-                >
-                  Presupuestar
-                </button>
-              )}
             </div>
 
             {state.showCheckout && (
@@ -146,6 +146,7 @@ export default function index(props) {
       <style jsx>{`
         section {
           width: 100%;
+          min-width: 30%;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -168,7 +169,6 @@ export default function index(props) {
         .cart_items {
           padding: 1em;
           width: 100%;
-          min-width: 390px;
         }
 
         .cart_item_img {
@@ -206,7 +206,7 @@ export default function index(props) {
           justify-content: space-between;
           align-items: center;
           padding: 1em;
-          min-width: 390px;
+          width: 100%;
         }
         .proceder {
           background-color: #0d3362;

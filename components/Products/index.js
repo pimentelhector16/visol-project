@@ -19,96 +19,56 @@ export default function index(props) {
   return (
     <>
       <Fade bottom cascade>
-        {props.products.map((product) => (
-          <article key={product.key}>
-            <div className="card card_container">
-              <a
-                href={"#" + product.id}
-                itemtype="https://schema.org/Product"
-                onClick={() => openModal(product)}
-              >
-                <div className="card_nombre">
-                  <span itemprop="name">{product.nombre}</span>
-                </div>
-                <img
-                  itemprop="image"
-                  src={`/productos/${product.imagen_thumb_url}`}
-                  alt={product.nombre}
-                  className="card_img"
-                />
-                <div className="card_body">
-                  <div
-                    itemprop="aggregateRating"
-                    itemtype="https://schema.org/AggregateRating"
-                    className="card_text_calification"
+        <ul className="products">
+          {props.products.map(function (product, index) {
+            return (
+              <li key={index}>
+                <div className="product">
+                  <a
+                    href={"#" + product.id}
+                    itemtype="https://schema.org/Product"
+                    onClick={() => openModal(product)}
                   >
-                    <span itemprop="ratingValue">{product.rated}</span>/5
-                    <FaStar />
-                  </div>
-                  <div>{product.marca}</div>
-                </div>
-                <div className="card_categoria">
-                  {product.categoria && product.categoria ? (
-                    <div>
-                      <strong>Categoria: </strong>
-                      {product.categoria}
+                    <div className="card_nombre">
+                      <span itemprop="name">{product.nombre}</span>
                     </div>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-                <div className="card_info">
-                  <div className="card_info_precio">
-                    {formatCurrency(product.precio)}
-                  </div>
-
-                  <div>
-                    <div>
-                      {product.valor_onz.medida && product.valor_onz.medida ? (
-                        <strong>
-                          <br />
-                          <strong>Onzas: </strong>
-                          {product.valor_onz.medida} x {product.moneda}
-                          {product.valor_onz.valor}
-                        </strong>
-                      ) : (
-                        <></>
-                      )}
-
-                      {product.valor_litro && product.valor_litro ? (
-                        <strong>
-                          <br />
-                          <strong>Litro: </strong>
-                          {product.valor_litro}
-                        </strong>
-                      ) : (
-                        <></>
-                      )}
-
-                      {product.valor_galon && product.valor_galon ? (
-                        <strong>
-                          <br />
-                          <strong>Galón: </strong>
-                          {product.valor_galon}
-                        </strong>
-                      ) : (
-                        <></>
-                      )}
+                    <img
+                      itemprop="image"
+                      src={`/productos/${product.imagen_thumb_url}`}
+                      alt={product.nombre}
+                      className="card_img"
+                    />
+                    <div className="card_body">
+                      <div
+                        itemprop="aggregateRating"
+                        itemtype="https://schema.org/AggregateRating"
+                        className="card_text_calification"
+                      >
+                        <span itemprop="ratingValue">{product.rated}</span>/5
+                        <FaStar />
+                      </div>
+                      <div>{product.marca}</div>
                     </div>
+
+                    <div className="card_info">
+                      <div className="card_info_precio">
+                        {formatCurrency(product.precio)}
+                      </div>
+                    </div>
+                  </a>
+                  <div className="card_footer">
+                    <button
+                      onClick={() => props.addToCart(product)}
+                      className="button"
+                    >
+                      Añadir <FaShoppingCart />
+                    </button>
                   </div>
                 </div>
-              </a>
-              <div className="card_footer">
-                <button
-                  onClick={() => props.addToCart(product)}
-                  className="button"
-                >
-                  Añadir <FaShoppingCart />
-                </button>
-              </div>
-            </div>
-          </article>
-        ))}
+              </li>
+            );
+          })}
+        </ul>
       </Fade>
 
       {product && (
@@ -120,25 +80,26 @@ export default function index(props) {
             <div className="product-details">
               <img
                 className="product-details-img"
-                src={`/productos/${product.imagen_thumb_url}`}
+                src={`/productos/${product.imagen_url}`}
                 alt={product.nombre}
               />
               <div className="product-details-description">
-                <p className="product-details-description-title">
-                  <strong>{product.nombre}</strong>
-                </p>
-                <p className="product-details-description-p">
-                  {product.descripcion}
-                </p>
-
-                <div className="product-details-price">
-                  Precio
-                  <strong>
-                    {product.valor_onz.medida} Onzas x{" "}
-                    {formatCurrency(product.precio)}
-                  </strong>
+                <div>
+                  <p className="product-details-description-title">
+                    <strong>{product.nombre}</strong>
+                  </p>
                 </div>
-                <div className="product-details-sizes">
+                <div>
+                  <div className="product-details-description-p">
+                    {product.descripcion}
+                  </div>{" "}
+                  <div className="product-details-price">
+                    Precio
+                    <strong>{formatCurrency(product.precio)}</strong>
+                  </div>
+                </div>
+
+                {/* <div className="product-details-sizes">
                   {product.valor_onz.medida && (
                     <>
                       <strong>Onzas: </strong>
@@ -163,8 +124,9 @@ export default function index(props) {
                     </>
                   )}
                 </div>
-                <div className="card-text-aromas">
-                  {product.aromas && (
+                 */}
+                {/* {product.aromas && (
+                  <div className="card-text-aromas">
                     <p>
                       <strong>Aromas: </strong>
                       <ul>
@@ -175,8 +137,9 @@ export default function index(props) {
                         ))}
                       </ul>
                     </p>
-                  )}
-                </div>
+                  </div>
+                )} */}
+
                 <button
                   className="button_modal"
                   onClick={() => {
@@ -192,19 +155,26 @@ export default function index(props) {
         </Modal>
       )}
       <style jsx>{`
-        .card {
-          align-items: stretch;
-          background: #fff;
-          border-radius: 10px;
-          color: #c4c4c4;
-          overflow: hidden;
-          box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.1);
+        .products {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          grid-gap: 1em;
+          justify-content: space-around;
+          align-items: flex-start;
+          align-content: flex-start;
         }
-        .card_container {
-          width: 100%;
+        .products li {
+          flex: 1 auto;
+          padding: 1rem;
+          list-style: none;
+        }
+        .product {
           display: flex;
           flex-direction: column;
-          justify-content: flex-end;
+          justify-content: space-between;
+          height: 100%;
+          border-radius: 10px;
+          box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
         }
 
         .card_nombre {
@@ -245,7 +215,7 @@ export default function index(props) {
         .card_info {
           padding: 1em;
           color: #474744;
-          height: 100px;
+          height: 70px;
         }
         .card_info_precio {
           background: #f16722;
@@ -283,11 +253,10 @@ export default function index(props) {
           display: flex;
           flex-wrap: wrap;
           justify-content: space-between;
-          max-height: 90vh;
         }
 
         .product-details-img {
-          max-width: 30rem;
+          max-width: 16rem;
           margin: 0 auto;
         }
         .product-details-description {
@@ -317,6 +286,7 @@ export default function index(props) {
         }
         .product-details-description-p {
           text-align: justify;
+          width: 100%;
         }
         .product-details-price {
           font-size: 2em;
