@@ -20,8 +20,8 @@ export default function index(props) {
     <>
       <Fade bottom cascade>
         {props.products.map((product) => (
-          <article key={product.key} className="card">
-            <div className="card_container">
+          <article key={product.key}>
+            <div className="card card_container">
               <a
                 href={"#" + product.id}
                 itemtype="https://schema.org/Product"
@@ -132,7 +132,11 @@ export default function index(props) {
                 </p>
 
                 <div className="product-details-price">
-                  <strong>{formatCurrency(product.precio)}</strong>
+                  Precio
+                  <strong>
+                    {product.valor_onz.medida} Onzas x{" "}
+                    {formatCurrency(product.precio)}
+                  </strong>
                 </div>
                 <div className="product-details-sizes">
                   {product.valor_onz.medida && (
@@ -194,9 +198,9 @@ export default function index(props) {
           border-radius: 10px;
           color: #c4c4c4;
           overflow: hidden;
+          box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.1);
         }
         .card_container {
-          box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
           width: 100%;
           display: flex;
           flex-direction: column;
