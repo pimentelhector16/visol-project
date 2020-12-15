@@ -68,6 +68,7 @@ export default function index(props) {
 
   return (
     <>
+    
       <Fade bottom cascade>
         <ul className="products">
           {props.products.map(function (product, index) {
