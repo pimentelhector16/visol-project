@@ -14,11 +14,10 @@ export default function index(props) {
       </div>
       <div className="item filter-size">
         Filtrar{" "}
-        <select value={props.size} onChange={props.filterProducts}>
+        <select value={props.filter} onChange={props.filterProducts}>
           <option value="">Todos</option>
-          <option value="onz">Onz</option>
-          <option value="litro">Litro</option>
-          <option value="galon">Galón</option>
+          <option value="Limpieza">Limpieza</option>
+          <option value="Purificadores">Purificadores de Agua</option>
         </select>
       </div>
 

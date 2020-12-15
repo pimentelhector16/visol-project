@@ -15,7 +15,7 @@ export default function index() {
           : []
         : [],
     sort: "",
-    size: "",
+    filter: "",
   });
 
   const createOrder = (order) => {
@@ -47,27 +47,34 @@ export default function index() {
 
   const filterProducts = (e) => {
     e.target.value === ""
-      ? setState({ ...state, size: e.target.value, products: productos })
+      ? setState({ ...state, filter: e.target.value, products: productos })
       : setState({
           ...state,
-          size: e.target.value,
+          filter: e.target.value,
           products: productos.filter(
-            (product) => product.availableSizes.indexOf(e.target.value) >= 0
+            (producto) => producto.categoria.indexOf(e.target.value) >= 0
           ),
         });
   };
 
-  const addToCart = (product) => {
+  const addToCart = (medida, cantidad, product, costoTotal) => {
     const cartItems = state.cartItems.slice();
     let alreadyInCart = false;
     cartItems.forEach((item) => {
-      if (item.id === product.id) {
-        item.count++;
+      if (item.id === product.id && item.medida === medida) {
+        item.count = item.count + cantidad;
+        item.costoTotal = item.costoTotal + costoTotal;
         alreadyInCart = true;
       }
     });
+
     if (!alreadyInCart) {
-      cartItems.push({ ...product, count: 1 });
+      cartItems.push({
+        ...product,
+        count: cantidad,
+        medida: medida,
+        costoTotal: costoTotal,
+      });
     }
 
     setState({ ...state, cartItems });
@@ -77,12 +84,15 @@ export default function index() {
     window.localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
   });
 
-  const removeFromCart = (product) => {
+  const removeFromCart = (product, medida) => {
     const cartItems = state.cartItems.slice();
 
     setState({
       ...state,
-      cartItems: cartItems.filter((x) => x.id !== product.id),
+
+      cartItems: cartItems.filter(
+        (item) => item.id !== product.id || item.medida !== medida
+      ),
     });
   };
 
@@ -105,19 +115,19 @@ export default function index() {
       </Head>
 
       <main>
-        <div className="filter">
-          {state.products && (
-            <Filter
-              count={state.products.length}
-              size={state.size}
-              sort={state.sort}
-              filterProducts={filterProducts}
-              sortProducts={sortProducts}
-            />
-          )}
-        </div>
         <div className="main">
           <section>
+            <div className="filter">
+              {state.products && (
+                <Filter
+                  count={state.products.length}
+                  filter={state.filter}
+                  sort={state.sort}
+                  filterProducts={filterProducts}
+                  sortProducts={sortProducts}
+                />
+              )}
+            </div>
             <Products products={state.products} addToCart={addToCart} />
           </section>
           <aside>
@@ -131,35 +141,28 @@ export default function index() {
         <style jsx>{`
           .main {
             display: grid;
-            grid-template-columns: 1fr auto;
+            grid-template-columns: 1fr 1fr;
             grid-template-rows: auto;
-            width: 100vw;
-            max-width: 1800px;
-            margin: 0 auto;
+            align-content: flex-start;
+            aling-items: flex-start;
           }
 
           section {
             padding: 1em;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            grid-gap: 1em;
-            justify-content: space-around;
-            align-items: flex-start;
-            align-content: flex-start;
-            width: 100%;
+            width: 70vw;
           }
+
           .filter {
             width: 100%;
             display: flex;
-            flex-wrap: wrap;
             flex-direction: row;
-            padding: 0.5em;
-            justify-content: flex-start;
+            justify-content: space-around;
             align-items: center;
           }
+
           aside {
-            padding: 1em;
-            width: 400px;
+            padding: 2em;
+            margin: 0 auto;
           }
 
           @media (max-width: 800px) {

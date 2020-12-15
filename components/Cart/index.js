@@ -1,15 +1,16 @@
 import { FaShoppingCart } from "react-icons/fa";
-import formatCurrency from "components/Utils/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Fade from "react-reveal/Fade";
 
 export default function index(props) {
   const [state, setState] = useState({ showCheckout: false });
+  const [total, setTotal] = useState(0);
   const [inputState, setInputState] = useState({
     email: "",
     nombre: "",
     direccion: "",
   });
+
   const createOrder = (e) => {
     e.preventDefault();
     const order = {
@@ -18,9 +19,7 @@ export default function index(props) {
       direccion: inputState.direccion,
       cartItems: props.cartItems,
     };
-
     props.createOrder(order);
-    console.log(inputState);
   };
   const handleInput = (e) => {
     e.preventDefault();
@@ -47,26 +46,72 @@ export default function index(props) {
               <div className="cart_items">
                 <Fade left cascade>
                   <ul>
-                    {props.cartItems.map((item) => {
+                    {props.cartItems.map((item, index) => {
                       return (
-                        <li key={item.id} className="cart_item">
+                        <li key={index} className="cart_item">
                           <div>
                             <img
                               className="cart_item_img"
                               src={`/productos/${item.imagen_thumb_url}`}
                               alt={item.nombre}
+                              loading="lazy"
                             />
                           </div>
                           <div>
                             <div className="text">{item.nombre}</div>
                             <div className="right">
                               <div className="cart_item_text">
-                                {formatCurrency(item.precio)} x {item.count}
+                                {item.onz && item.medida === "onzas" && (
+                                  <>
+                                    <small>
+                                      V/Onzas [{item.onz.medida}] x {item.count}{" "}
+                                      :{" "}
+                                    </small>
+                                    {
+                                      item.onz.valor * item.count
+                                    }
+                                  </>
+                                )}
+                                {item.litro && item.medida === "litro" && (
+                                  <>
+                                    <small>V/Litro: </small>
+                                    {
+                                      item.litro.valor * item.count
+                                    }
+                                  </>
+                                )}
+                                {item.galon && item.medida === "galon" && (
+                                  <>
+                                    <small>V/Galón: </small>
+                                    {
+                                      item.galon.valor * item.count
+                                    }
+                                  </>
+                                )}
+                                {item.medida && item.medida === "unidad" && (
+                                  <>
+                                    <small>V/Unidad: </small>
+                                    {item.precio * item.count}
+                                  </>
+                                )}
                               </div>
 
                               <button
                                 className="button "
-                                onClick={() => props.removeFromCart(item)}
+                                onClick={() => {
+                                  item.onz &&
+                                    item.medida === "onzas" &&
+                                    props.removeFromCart(item, "onzas");
+                                  item.litro &&
+                                    item.medida === "litro" &&
+                                    props.removeFromCart(item, "litro");
+                                  item.galon &&
+                                    item.medida === "galon" &&
+                                    props.removeFromCart(item, "galon");
+                                  item.medida &&
+                                    item.medida === "unidad" &&
+                                    props.removeFromCart(item, "unidad");
+                                }}
                               >
                                 Remover
                               </button>
@@ -78,24 +123,25 @@ export default function index(props) {
                   </ul>
                 </Fade>
               </div>
-            </div>
-            <div className="proceder_cart">
-              <div>
-                Total:{" "}
-                {formatCurrency(
-                  props.cartItems.reduce((a, c) => a + c.precio * c.count, 0)
+              <div className="proceder_cart">
+                <div>
+                  Total:
+                  {props.cartItems.reduce(
+                    (a, c) => a + c.costoTotal * c.count,
+                    0
+                  )}
+                </div>
+                {!state.showCheckout && (
+                  <button
+                    className="button proceder"
+                    onClick={() => {
+                      setState({ showCheckout: true });
+                    }}
+                  >
+                    Presupuestar
+                  </button>
                 )}
               </div>
-              {!state.showCheckout && (
-                <button
-                  className="button proceder"
-                  onClick={() => {
-                    setState({ showCheckout: true });
-                  }}
-                >
-                  Presupuestar
-                </button>
-              )}
             </div>
 
             {state.showCheckout && (
@@ -146,6 +192,7 @@ export default function index(props) {
       <style jsx>{`
         section {
           width: 100%;
+          min-width: 30%;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -168,7 +215,6 @@ export default function index(props) {
         .cart_items {
           padding: 1em;
           width: 100%;
-          min-width: 390px;
         }
 
         .cart_item_img {
@@ -206,7 +252,7 @@ export default function index(props) {
           justify-content: space-between;
           align-items: center;
           padding: 1em;
-          min-width: 390px;
+          width: 100%;
         }
         .proceder {
           background-color: #0d3362;
