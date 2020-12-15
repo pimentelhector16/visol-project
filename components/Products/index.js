@@ -1,17 +1,67 @@
 import { FaShoppingCart, FaStar } from "react-icons/fa";
 import { useState } from "react";
-import formatCurrency from "components/Utils/utils";
 import Fade from "react-reveal/Fade";
 import Zoom from "react-reveal/Zoom";
 import Modal from "react-modal";
 
-export default function index(props) {
-  const [product, setProduct] = useState(null);
+// Estilos para el modal Grande
+const customStyles = {
+  content: {
+    width: "100vw",
+    height: "100vh",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
+// Estilos para el modal pequeño y centrado
+const customStylesSmall = {
+  content: {
+    height: "100vh",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+export default function index(props) {
+  const [cantidad, setCantidad] = useState(1);
+  const [form, setForm] = useState({
+    medida: "",
+    precio: 0,
+    cantidad: 0,
+    costoTotal: 0,
+  });
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // IMPL DEL MODAL DE AGREGAR PRODUCTOS
+  const [productAgree, setProductAgree] = useState(null);
+  const openModalAgregar = (product) => {
+    setProductAgree(product);
+    setCantidad(1);
+  };
+  const closeModalAgregar = () => {
+    setProductAgree(null);
+    setCantidad(1);
+  };
+
+  // IMPL DEL MODAL PARA MOSTRAR DETALLES
+  const [product, setProduct] = useState(null);
   const openModal = (product) => {
     setProduct(product);
   };
-
   const closeModal = () => {
     setProduct(null);
   };
@@ -24,42 +74,31 @@ export default function index(props) {
             return (
               <li key={index}>
                 <div className="product">
-                  <a
-                    href={"#" + product.id}
-                    itemtype="https://schema.org/Product"
-                    onClick={() => openModal(product)}
-                  >
+                  <a href={"#" + product.id} onClick={() => openModal(product)}>
                     <div className="card_nombre">
-                      <span itemprop="name">{product.nombre}</span>
+                      <span>{product.nombre}</span>
                     </div>
                     <img
-                      itemprop="image"
                       src={`/productos/${product.imagen_thumb_url}`}
                       alt={product.nombre}
                       className="card_img"
                     />
                     <div className="card_body">
-                      <div
-                        itemprop="aggregateRating"
-                        itemtype="https://schema.org/AggregateRating"
-                        className="card_text_calification"
-                      >
-                        <span itemprop="ratingValue">{product.rated}</span>/5
+                      <div className="card_text_calification">
+                        <span>{product.rated}</span>/5
                         <FaStar />
                       </div>
                       <div>{product.marca}</div>
                     </div>
 
                     <div className="card_info">
-                      <div className="card_info_precio">
-                        {formatCurrency(product.precio)}
-                      </div>
+                      <div className="card_info_precio">{product.precio}</div>
                     </div>
                   </a>
                   <div className="card_footer">
                     <button
-                      onClick={() => props.addToCart(product)}
                       className="button"
+                      onClick={() => openModalAgregar(product)}
                     >
                       Añadir <FaShoppingCart />
                     </button>
@@ -70,9 +109,190 @@ export default function index(props) {
           })}
         </ul>
       </Fade>
+      {productAgree && (
+        <Modal
+          isOpen={true}
+          onRequestClose={closeModalAgregar}
+          style={customStylesSmall}
+        >
+          <Zoom>
+            <div className="modal_form">
+              <button onClick={closeModalAgregar} className="close-modal">
+                x
+              </button>
+              <div>
+                <div>
+                  <h2>{productAgree.nombre}</h2>
+                </div>
+                <div className="modal_form_body">
+                  <div className="modal_form_img">
+                    <img
+                      src={`/productos/${productAgree.imagen_thumb_url}`}
+                      alt={productAgree.nombre}
+                    />
+                  </div>
+                  <div className="modal_form_container">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        let costoTotal;
+                        productAgree.onz &&
+                          form.medida === "onzas" &&
+                          (costoTotal = productAgree.onz.valor * cantidad);
+                        productAgree.litro &&
+                          form.medida === "litro" &&
+                          (costoTotal = productAgree.onz.valor * cantidad);
+                        productAgree.galon &&
+                          form.medida === "galon" &&
+                          (costoTotal = productAgree.onz.valor * cantidad);
+                        productAgree.medida &&
+                          form.medida === "unidad" &&
+                          (costoTotal = productAgree.onz.valor * cantidad);
 
+                        props.addToCart(
+                          form.medida,
+                          cantidad,
+                          productAgree,
+                          costoTotal
+                        );
+                        closeModalAgregar();
+                        setForm({ ...form, medida: "" });
+                      }}
+                    >
+                      <div>
+                        <select
+                          name="medida"
+                          required
+                          value={form.medida}
+                          onChange={handleChange}
+                        >
+                          <option value="" disabled>
+                            Seleccione
+                          </option>
+                          {productAgree.onz && (
+                            <option value="onzas">Onzas</option>
+                          )}
+                          {productAgree.litro && (
+                            <option value="litro">Litro</option>
+                          )}
+                          {productAgree.galon && (
+                            <option value="galon">Galón</option>
+                          )}
+                          {productAgree.medida && (
+                            <option value="unidad">Unidad</option>
+                          )}
+                        </select>
+
+                        <div>
+                          <div className="number-input">
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                cantidad <= 1
+                                  ? setCantidad(1)
+                                  : setCantidad(cantidad - 1);
+                              }}
+                              className="button-plus"
+                            >
+                              -
+                            </button>
+
+                            <input
+                              min="0"
+                              name="cantidad"
+                              value={cantidad}
+                              onChange={handleChange}
+                              type="number"
+                            />
+
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setCantidad(cantidad + 1);
+                              }}
+                              className="button-plus"
+                            >
+                              +
+                            </button>
+                          </div>
+                          <div className="text-footer-total">
+                            <div>
+                              {productAgree.onz && form.medida === "onzas" && (
+                                <>
+                                  <small>
+                                    Valor por {productAgree.onz.medida} Onzas:{" "}
+                                  </small>
+                                  {productAgree.moneda} {productAgree.onz.valor}
+                                </>
+                              )}
+                              {productAgree.litro && form.medida === "litro" && (
+                                <>
+                                  <small>Valor por Litro: </small>
+                                  {productAgree.moneda}{" "}
+                                  {productAgree.litro.valor}
+                                </>
+                              )}
+                              {productAgree.galon && form.medida === "galon" && (
+                                <>
+                                  <small>Valor por Galón: </small>
+                                  {productAgree.moneda}{" "}
+                                  {productAgree.galon.valor}
+                                </>
+                              )}
+                              {productAgree.medida && form.medida === "unidad" && (
+                                <>
+                                  <small>Valor por Unidad: </small>
+                                  {productAgree.moneda} {productAgree.precio}
+                                </>
+                              )}
+                            </div>
+                            <div>
+                              <strong>
+                                {productAgree.onz && form.medida === "onzas" && (
+                                  <>
+                                    <small>Valor Total: </small>
+                                    {productAgree.onz.valor * cantidad}
+                                  </>
+                                )}
+                                {productAgree.litro && form.medida === "litro" && (
+                                  <>
+                                    <small>Valor Total: </small>
+                                    {productAgree.litro.valor * cantidad}
+                                  </>
+                                )}
+                                {productAgree.galon && form.medida === "galon" && (
+                                  <>
+                                    <small>Valor Total: </small>
+                                    {productAgree.galon.valor * cantidad}
+                                  </>
+                                )}
+                                {productAgree.medida &&
+                                  form.medida === "unidad" && (
+                                    <>
+                                      <small>Valor Total: </small>
+                                      {productAgree.precio * cantidad}
+                                    </>
+                                  )}
+                              </strong>
+                            </div>
+                          </div>
+                          <div>
+                            <button className="button" type="submit">
+                              Añadir a <FaShoppingCart />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Zoom>
+        </Modal>
+      )}
       {product && (
-        <Modal isOpen={true} onRequestClose={closeModal}>
+        <Modal isOpen={true} onRequestClose={closeModal} style={customStyles}>
           <Zoom>
             <button className="close-modal" onClick={closeModal}>
               x
@@ -92,72 +312,31 @@ export default function index(props) {
                 <div>
                   <div className="product-details-description-p">
                     {product.descripcion}
-                  </div>{" "}
+                  </div>
                   <div className="product-details-price">
                     Precio
-                    <strong>{formatCurrency(product.precio)}</strong>
+                    <strong>(product.precio)</strong>
                   </div>
+                  <button
+                    className="button_modal"
+                    onClick={() => {
+                      closeModal();
+                      openModalAgregar(product);
+                    }}
+                  >
+                    Añadir <FaShoppingCart />
+                  </button>
                 </div>
-
-                {/* <div className="product-details-sizes">
-                  {product.valor_onz.medida && (
-                    <>
-                      <strong>Onzas: </strong>
-                      {product.valor_onz.medida} x {product.moneda}
-                      {product.valor_onz.valor}
-                    </>
-                  )}
-
-                  {product.valor_litro && (
-                    <>
-                      <br />
-                      <strong>Litro: </strong>
-                      {product.valor_litro}
-                    </>
-                  )}
-
-                  {product.valor_galon && (
-                    <>
-                      <br />
-                      <strong>Galón: </strong>
-                      {product.valor_galon}
-                    </>
-                  )}
-                </div>
-                 */}
-                {/* {product.aromas && (
-                  <div className="card-text-aromas">
-                    <p>
-                      <strong>Aromas: </strong>
-                      <ul>
-                        {product.aromas.map((item, index) => (
-                          <li key={index} className="aromas-li">
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </p>
-                  </div>
-                )} */}
-
-                <button
-                  className="button_modal"
-                  onClick={() => {
-                    props.addToCart(product);
-                    closeModal();
-                  }}
-                >
-                  Añadir <FaShoppingCart />
-                </button>
               </div>
             </div>
           </Zoom>
         </Modal>
       )}
+
       <style jsx>{`
         .products {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
           grid-gap: 1em;
           justify-content: space-around;
           align-items: flex-start;
@@ -256,7 +435,9 @@ export default function index(props) {
         }
 
         .product-details-img {
-          max-width: 16rem;
+          max-width: 100%;
+          width: 15em;
+          height: 20em;
           margin: 0 auto;
         }
         .product-details-description {
@@ -312,6 +493,52 @@ export default function index(props) {
         }
         .aromas-li:hover {
           opacity: 80%;
+        }
+
+        /* FORMULARIO */
+        .modal_form {
+          display: grid;
+          grid-template-columns: 1fr auto;
+          grid-template-rows: auto;
+          width: 100%;
+          margin: 0 auto;
+          padding-top: 3em;
+        }
+
+        .modal_form_body {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+        }
+        .modal_form_img img {
+          width: 15em;
+          position: relative;
+        }
+
+        .modal_form_container {
+          padding: 1em;
+        }
+
+        .number-input {
+          display: flex;
+          justify-content: inherit;
+        }
+        .text-footer-total {
+          margin: 0.5em;
+          display: flex;
+          flex-direction: column;
+          font-size: clamp(1.1rem, 1vw, 1.1rem);
+          color: #0d3362;
+          padding: 1em;
+          text-align: center;
+        }
+        .text-footer-total div {
+          padding: 1em;
+        }
+        .button-plus {
+          padding: 1em;
+          color: white;
+          background: #0d3362;
         }
       `}</style>
     </>

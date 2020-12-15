@@ -13,15 +13,16 @@ export const productos = [
     categoria: ["Limpieza"],
     imagen_url: "p1.jpg",
     imagen_thumb_url: "p1.jpg",
-    valor_onz: {
+    onz: {
       medida: "24",
-      valor: "28.00",
+      valor: "25.00",
     },
-    valor_litro: "65.00",
+    galon: {
+      valor: "68.00",
+    },
     moneda: "Q",
     rated: 3.5,
     availableSizes: ["onz", "litro"],
-    precio: 28.0,
   },
   {
     id: "2",
@@ -35,11 +36,13 @@ export const productos = [
     categoria: ["Limpieza"],
     imagen_url: "p2.jpg",
     imagen_thumb_url: "p2.jpg",
-    valor_onz: {
+    onz: {
       medida: "16",
       valor: "35.00",
     },
-    valor_galon: "45.00",
+    galon: {
+      valor: "45.00",
+    },
     moneda: "Q",
     rated: 3.5,
     aromas: ["Canela", "Primaveral", "Fresh", "Sweet Air", "granada"],
@@ -56,11 +59,13 @@ export const productos = [
     categoria: ["Limpieza"],
     imagen_url: "p3.jpg",
     imagen_thumb_url: "p3.jpg",
-    valor_onz: {
+    onz: {
       medida: "16",
       valor: "25.00",
     },
-    valor_galon: "60.00",
+    galon: {
+      valor: "60.00",
+    },
     moneda: "Q",
     rated: 3.5,
     aromas: ["Fresh", "Manzana Verde", "Granada"],
@@ -77,11 +82,13 @@ export const productos = [
     categoria: ["Limpieza"],
     imagen_url: "p4.jpg",
     imagen_thumb_url: "p4.jpg",
-    valor_onz: {
+    onz: {
       medida: "25",
       valor: "20.00",
     },
-    valor_galon: "55.00",
+    galon: {
+      valor: "55.00",
+    },
     moneda: "Q",
     rated: 3.5,
     aromas: ["Limón"],
@@ -100,15 +107,16 @@ export const productos = [
     categoria: ["Limpieza"],
     imagen_url: "p5.jpg",
     imagen_thumb_url: "p5.jpg",
-    valor_onz: {
+    onz: {
       medida: "24",
       valor: "28.00",
     },
-    valor_litro: "65.00",
+    litro: {
+      valor: "65.00",
+    },
     moneda: "Q",
     rated: 3.5,
     availableSizes: ["onz", "litro"],
-    precio: 28.0,
   },
   {
     id: "6",
@@ -121,11 +129,13 @@ export const productos = [
     categoria: ["Limpieza"],
     imagen_url: "p6.jpg",
     imagen_thumb_url: "p6.jpg",
-    valor_onz: {
+    onz: {
       medida: "16",
       valor: "35.00",
     },
-    valor_galon: "45.00",
+    galon: {
+      valor: "45.00",
+    },
     moneda: "Q",
     rated: 5,
     aromas: ["Canela", "Primaveral", "Fresh", "Sweet Air", "granada"],
@@ -140,11 +150,13 @@ export const productos = [
     categoria: ["Limpieza"],
     imagen_url: "p7.jpg",
     imagen_thumb_url: "p7.jpg",
-    valor_onz: {
+    onz: {
       medida: "16",
       valor: "25.00",
     },
-    valor_galon: "60.00",
+    galon: {
+      valor: "60.00",
+    },
     moneda: "Q",
     rated: 4,
     aromas: ["Fresh", "Manzana Verde", "Granada"],
@@ -167,6 +179,7 @@ export const productos = [
     moneda: "Q",
     rated: 5,
     precio: 448.0,
+    medida: "unidad",
   },
   {
     id: "F1521",
@@ -178,11 +191,12 @@ export const productos = [
     NO NECESITA ELECTRICIDAD
     NO NECESITA SERVICIO
     REMUEVE EL 99.99% DE MICROORGANÍSMOS`,
-    categoria: ["Purificadores5"],
+    categoria: ["Purificadores"],
     imagen_url: "pfa1.jpg",
     imagen_thumb_url: "pfa1.jpg",
     moneda: "Q",
     rated: 5,
     precio: 448.0,
+    medida: "unidad",
   },
 ];
