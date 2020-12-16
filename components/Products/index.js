@@ -8,7 +8,7 @@ import Modal from "react-modal";
 const customStyles = {
   content: {
     width: "80vw",
-    height: "90vh",
+    height: "auto",
     top: "50%",
     left: "50%",
     right: "auto",
@@ -21,7 +21,7 @@ const customStyles = {
 // Estilos para el modal pequeño y centrado
 const customStylesSmall = {
   content: {
-    height: "100vh",
+    height: "auto",
     top: "50%",
     left: "50%",
     right: "auto",
@@ -125,7 +125,7 @@ export default function index(props) {
             <div className="modal_form">
               <div>
                 <div>
-                  <h2>{productAgree.nombre}</h2>
+                  <h2 className="modal_form_title">{productAgree.nombre}</h2>
                 </div>
                 <div className="modal_form_body">
                   <div className="modal_form_img">
@@ -150,7 +150,7 @@ export default function index(props) {
                           (costoTotal = productAgree.galon.valor * cantidad);
                         productAgree.medida &&
                           form.medida === "unidad" &&
-                          (costoTotal = productAgree.medida.valor * cantidad);
+                          (costoTotal = productAgree.precio * cantidad);
 
                         props.addToCart(
                           form.medida,
@@ -252,18 +252,21 @@ export default function index(props) {
                                 {productAgree.onz && form.medida === "onzas" && (
                                   <>
                                     <small>Valor Total: </small>
+                                    {productAgree.moneda}
                                     {productAgree.onz.valor * cantidad}
                                   </>
                                 )}
                                 {productAgree.litro && form.medida === "litro" && (
                                   <>
                                     <small>Valor Total: </small>
+                                    {productAgree.moneda}
                                     {productAgree.litro.valor * cantidad}
                                   </>
                                 )}
                                 {productAgree.galon && form.medida === "galon" && (
                                   <>
                                     <small>Valor Total: </small>
+                                    {productAgree.moneda}
                                     {productAgree.galon.valor * cantidad}
                                   </>
                                 )}
@@ -271,6 +274,7 @@ export default function index(props) {
                                   form.medida === "unidad" && (
                                     <>
                                       <small>Valor Total: </small>
+                                      {productAgree.moneda}
                                       {productAgree.precio * cantidad}
                                     </>
                                   )}
@@ -298,25 +302,42 @@ export default function index(props) {
             x
           </button>
           <Zoom>
-            <div className="product-details">
-              <img
-                className="product-details-img"
-                src={`/productos/${product.imagen_url}`}
-                alt={product.nombre}
-              />
-              <div className="product-details-description">
-                <div>
+            <div className="product-container">
+              <div className="product-details">
+                <img
+                  className="product-details-img"
+                  src={`/productos/${product.imagen_url}`}
+                  alt={product.nombre}
+                />
+                <div className="product-details-description">
                   <p className="product-details-description-title">
                     <strong>{product.nombre}</strong>
                   </p>
-                </div>
-                <div>
-                  <div className="product-details-description-p">
-                    {product.descripcion}
-                  </div>
-                  <div className="product-details-price">
-                    Categoria:
-                    <strong>{product.categoria}</strong>
+                  <div>
+                    <div className="product-details-description-p">
+                      <small>Descripción: </small>
+                      {product.descripcion}
+                    </div>
+                    <br />
+                    <div className="">
+                      <strong>Categoria: </strong>
+                      {product.categoria}
+                    </div>
+                    {product.aromas && (
+                      <div className="product-details-aromas">
+                        <strong>Aromas: </strong>
+                        <ul>
+                          {product.aromas &&
+                            product.aromas.map((aroma) => {
+                              return (
+                                <li key={aroma} className="aromas-li">
+                                  {aroma}
+                                </li>
+                              );
+                            })}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                   <button
                     className="button_modal"
@@ -393,9 +414,7 @@ export default function index(props) {
           text-align: justify;
         }
         .card_info {
-          padding: 1em;
           color: #474744;
-          height: 70px;
         }
         .card_info_precio {
           background: #f16722;
@@ -428,28 +447,43 @@ export default function index(props) {
           color: white;
         }
 
-        /* VENTANA MODAL DETALLE */
+        /* FORMULARIO */
+        .product-container {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+        }
         .product-details {
           display: flex;
-          flex-direction: column;
-          flex-wrap: nowrap;
-          width: "80%";
-          height: "100%";
+          flex-direction: row;
           margin: 0 auto;
           padding: 2em;
           font-size: clamp(1em, 1vw, 1rem);
         }
 
+        @media (max-width: 800px) {
+          .product-details {
+            flex-direction: column;
+          }
+        }
+
         .product-details-img {
-          display: block;
-          width: 100%;
-          height: auto;
-          box-shadow: none;
+          min-width: 15rem;
+          max-width: 50%;
+          max-height: 15rem;
+          margin: 0 auto;
         }
 
         .product-details-description {
           padding: 1em;
         }
+
+        .product-details-aromas {
+          padding: 1em;
+        }
+
         .close-modal {
           position: absolute;
           right: 1em;
@@ -459,11 +493,12 @@ export default function index(props) {
           background: #0d3362;
           color: white;
         }
+
         .button_modal {
           padding: 1em;
           float: right;
-          background: #f0f0f0;
-          color: #292d48;
+          background: #0d3362;
+          color: white;
         }
 
         .product-details-description-title {
@@ -473,23 +508,16 @@ export default function index(props) {
         .product-details-description-p {
           text-align: justify;
         }
-        .product-details-price {
-          color: #f16722;
-          text-align: center;
-        }
         .product-details-sizes {
           padding: 1em;
           list-style: none;
-        }
-        .card-text-aromas {
-          padding: 1em;
         }
         .aromas-li {
           list-style-type: square;
           display: inline-block;
           padding: 1em;
           margin: 0.5em;
-          background: #0d3362;
+          background: #f16722;
           color: white;
         }
         .aromas-li:hover {
@@ -501,9 +529,14 @@ export default function index(props) {
           display: grid;
           grid-template-columns: 1fr auto;
           grid-template-rows: auto;
+          justify-content: center;
+          align-items: center;
           width: 100%;
           margin: 0 auto;
           padding-top: 3em;
+        }
+        .modal_form_title {
+          text-align: center;
         }
 
         .modal_form_body {

@@ -5,6 +5,7 @@ import Fade from "react-reveal/Fade";
 export default function index(props) {
   const [state, setState] = useState({ showCheckout: false });
   const [total, setTotal] = useState(0);
+
   const [inputState, setInputState] = useState({
     email: "",
     nombre: "",
@@ -21,6 +22,7 @@ export default function index(props) {
     };
     props.createOrder(order);
   };
+
   const handleInput = (e) => {
     e.preventDefault();
     setInputState({
@@ -28,6 +30,7 @@ export default function index(props) {
       [e.target.name]: e.target.value,
     });
   };
+
   return (
     <>
       <section>
@@ -270,11 +273,16 @@ export default function index(props) {
           width: 100%;
           padding: 0;
           list-style: none;
+          background: white;
+          border-radius: 10px;
         }
         .form-container li {
           display: flex;
           flex-direction: column;
           padding: 1em;
+        }
+        input {
+          border: 0.1rem solid #bbc1c1;
         }
       `}</style>
     </>
