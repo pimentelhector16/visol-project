@@ -35,7 +35,7 @@ export default function index(props) {
           <FaShoppingCart />
           Carrito de Compras
         </div>
-        {props.cartItems.length === 0 ? (
+        {props.cartItems && props.cartItems.length === 0 ? (
           <p className="cart_text">Carrito Vacio</p>
         ) : (
           <>
@@ -57,64 +57,63 @@ export default function index(props) {
                               loading="lazy"
                             />
                           </div>
-                          <div>
+                          <div className="cart_item_text">
                             <div className="text">{item.nombre}</div>
-                            <div className="right">
-                              <div className="cart_item_text">
+                            <div className="text">
+                              <div>
                                 {item.onz && item.medida === "onzas" && (
                                   <>
                                     <small>
                                       V/Onzas [{item.onz.medida}] x {item.count}{" "}
                                       :{" "}
                                     </small>
-                                    {
-                                      item.onz.valor * item.count
-                                    }
+                                    {item.moneda}
+                                    {item.onz.valor * item.count}
                                   </>
                                 )}
                                 {item.litro && item.medida === "litro" && (
                                   <>
                                     <small>V/Litro: </small>
-                                    {
-                                      item.litro.valor * item.count
-                                    }
+                                    {item.moneda}
+                                    {item.litro.valor * item.count}
                                   </>
                                 )}
                                 {item.galon && item.medida === "galon" && (
                                   <>
                                     <small>V/Galón: </small>
-                                    {
-                                      item.galon.valor * item.count
-                                    }
+                                    {item.moneda}
+                                    {item.galon.valor * item.count}
                                   </>
                                 )}
                                 {item.medida && item.medida === "unidad" && (
                                   <>
                                     <small>V/Unidad: </small>
+                                    {item.moneda}
                                     {item.precio * item.count}
                                   </>
                                 )}
                               </div>
-
-                              <button
-                                className="button "
-                                onClick={() => {
-                                  item.onz &&
-                                    item.medida === "onzas" &&
-                                    props.removeFromCart(item, "onzas");
-                                  item.litro &&
-                                    item.medida === "litro" &&
-                                    props.removeFromCart(item, "litro");
-                                  item.galon &&
-                                    item.medida === "galon" &&
-                                    props.removeFromCart(item, "galon");
-                                  item.medida &&
-                                    item.medida === "unidad" &&
-                                    props.removeFromCart(item, "unidad");
-                                }}
-                              >
-                                Remover
-                              </button>
+                              <div>
+                                <button
+                                  className="button right"
+                                  onClick={() => {
+                                    item.onz &&
+                                      item.medida === "onzas" &&
+                                      props.removeFromCart(item, "onzas");
+                                    item.litro &&
+                                      item.medida === "litro" &&
+                                      props.removeFromCart(item, "litro");
+                                    item.galon &&
+                                      item.medida === "galon" &&
+                                      props.removeFromCart(item, "galon");
+                                    item.medida &&
+                                      item.medida === "unidad" &&
+                                      props.removeFromCart(item, "unidad");
+                                  }}
+                                >
+                                  X
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </li>
@@ -125,11 +124,8 @@ export default function index(props) {
               </div>
               <div className="proceder_cart">
                 <div>
-                  Total:
-                  {props.cartItems.reduce(
-                    (a, c) => a + c.costoTotal * c.count,
-                    0
-                  )}
+                  Total: Q
+                  {props.cartItems.reduce((a, c) => a + c.costoTotal, 0)}
                 </div>
                 {!state.showCheckout && (
                   <button
@@ -192,7 +188,6 @@ export default function index(props) {
       <style jsx>{`
         section {
           width: 100%;
-          min-width: 30%;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -215,11 +210,14 @@ export default function index(props) {
         .cart_items {
           padding: 1em;
           width: 100%;
+          background: white;
+          border-radius: 10px;
         }
 
         .cart_item_img {
           padding: 0;
           width: 3rem;
+          border-radius: 10px;
         }
         .cart_item {
           list-style: none;
@@ -236,10 +234,7 @@ export default function index(props) {
           padding: 1em;
           margin-left: 1em;
         }
-        .right {
-          text-align: right;
-          padding: 1em;
-        }
+
         .button {
           background-color: #0d3362;
           color: white;
@@ -261,7 +256,11 @@ export default function index(props) {
           border-radius: 12px;
         }
         .cart_item_text {
-          padding-right: 1em;
+          display: flex;
+          flex-direction: column;
+        }
+        .right {
+          float: right;
         }
         /* FORM CHECKOUT */
         form {

@@ -7,8 +7,8 @@ import Modal from "react-modal";
 // Estilos para el modal Grande
 const customStyles = {
   content: {
-    width: "100vw",
-    height: "100vh",
+    width: "80vw",
+    height: "90vh",
     top: "50%",
     left: "50%",
     right: "auto",
@@ -117,11 +117,12 @@ export default function index(props) {
           onRequestClose={closeModalAgregar}
           style={customStylesSmall}
         >
+          {" "}
+          <button onClick={closeModalAgregar} className="close-modal">
+            x
+          </button>
           <Zoom>
             <div className="modal_form">
-              <button onClick={closeModalAgregar} className="close-modal">
-                x
-              </button>
               <div>
                 <div>
                   <h2>{productAgree.nombre}</h2>
@@ -293,10 +294,10 @@ export default function index(props) {
       )}
       {product && (
         <Modal isOpen={true} onRequestClose={closeModal} style={customStyles}>
+          <button className="close-modal" onClick={closeModal}>
+            x
+          </button>
           <Zoom>
-            <button className="close-modal" onClick={closeModal}>
-              x
-            </button>
             <div className="product-details">
               <img
                 className="product-details-img"
@@ -352,8 +353,9 @@ export default function index(props) {
           flex-direction: column;
           justify-content: space-between;
           height: 100%;
+          background: white;
           border-radius: 10px;
-          box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+          box-shadow: 1px 6px 15px 1px #d9e3ec;
         }
 
         .card_nombre {
@@ -363,7 +365,6 @@ export default function index(props) {
           padding: 1em;
           height: 70px;
           border-radius: 10px 10px 0px 0px;
-          font-weight: 600;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -414,7 +415,6 @@ export default function index(props) {
         .button {
           padding: 10px;
           border: 1px solid #0d3362;
-
           position: relative;
           outline: none;
           border-radius: 5px;
@@ -428,26 +428,32 @@ export default function index(props) {
           color: white;
         }
 
+        /* VENTANA MODAL DETALLE */
         .product-details {
           display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
+          flex-direction: column;
+          flex-wrap: nowrap;
+          width: "80%";
+          height: "100%";
+          margin: 0 auto;
+          padding: 2em;
+          font-size: clamp(1em, 1vw, 1rem);
         }
 
         .product-details-img {
-          max-width: 100%;
-          width: 15em;
-          height: 20em;
-          margin: 0 auto;
+          display: block;
+          width: 100%;
+          height: auto;
+          box-shadow: none;
         }
+
         .product-details-description {
           padding: 1em;
-          flex: 1 1;
         }
         .close-modal {
           position: absolute;
-          right: 1rem;
-          top: 1rem;
+          right: 1em;
+          top: 1em;
           padding: 1em;
           z-index: 1000;
           background: #0d3362;
@@ -461,20 +467,15 @@ export default function index(props) {
         }
 
         .product-details-description-title {
-          width: 100%;
-          font-size: 2em;
+          font-size: 1.4em;
           color: #0d3362;
         }
         .product-details-description-p {
           text-align: justify;
-          width: 100%;
         }
         .product-details-price {
-          font-size: 2em;
           color: #f16722;
           text-align: center;
-          width: 100%;
-          padding: 1em;
         }
         .product-details-sizes {
           padding: 1em;

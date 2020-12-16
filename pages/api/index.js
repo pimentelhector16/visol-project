@@ -22,7 +22,7 @@ export const productos = [
     },
     moneda: "Q",
     rated: 3.5,
-    availableSizes: ["onz", "litro"],
+    availableSizes: ["onz", "galon"],
   },
   {
     id: "2",
@@ -165,7 +165,7 @@ export const productos = [
   },
   {
     id: "F152",
-    nombre: "Filtro de agua por gravedad Pure2O Tipo Ecofiltro",
+    nombre: "Filtro de agua por gravedad Pure2O",
     descripcion: `Pure2O filtro por gravedad, con capacidad de eliminar el 99.99% de microorganísmos en el agua
     Desarrollado por el más grande fabricante de medio de filtración a base de tierras diatomaceas "Imerys", remueve peligrosas del agua, produciendo agua para beber segura y sana. Nuestro Cartucho ImerPure puede remover bacterias como E. Collie, y protozoos como el criptosporidium, también remueve contaminantes como algas, gusanos, polvo, micronutrientes.
     Pure2O puede convertir en segura el agua de su chorro, agua de lluvia y aguas de fuentes naturales en agua segura para beber, sin afectar los minerales y microelementos necesarios para hidratar.el cuerpo al momento de bener agua.
@@ -174,6 +174,7 @@ export const productos = [
     NO NECESITA SERVICIO
     REMUEVE EL 99.99% DE MICROORGANÍSMOS`,
     categoria: ["Purificadores"],
+    marca: "Ecofiltro",
     imagen_url: "pfa1.jpg",
     imagen_thumb_url: "pfa1.jpg",
     moneda: "Q",
@@ -183,7 +184,7 @@ export const productos = [
   },
   {
     id: "F1521",
-    nombre: "Filtro de agua por gravedad Pure2O Tipo Ecofiltro",
+    nombre: "Filtro de agua por gravedad Pure2O",
     descripcion: `Pure2O filtro por gravedad, con capacidad de eliminar el 99.99% de microorganísmos en el agua
     Desarrollado por el más grande fabricante de medio de filtración a base de tierras diatomaceas "Imerys", remueve peligrosas del agua, produciendo agua para beber segura y sana. Nuestro Cartucho ImerPure puede remover bacterias como E. Collie, y protozoos como el criptosporidium, también remueve contaminantes como algas, gusanos, polvo, micronutrientes.
     Pure2O puede convertir en segura el agua de su chorro, agua de lluvia y aguas de fuentes naturales en agua segura para beber, sin afectar los minerales y microelementos necesarios para hidratar.el cuerpo al momento de bener agua.
@@ -192,6 +193,7 @@ export const productos = [
     NO NECESITA SERVICIO
     REMUEVE EL 99.99% DE MICROORGANÍSMOS`,
     categoria: ["Purificadores"],
+    marca: "Ecofiltro",
     imagen_url: "pfa1.jpg",
     imagen_thumb_url: "pfa1.jpg",
     moneda: "Q",
