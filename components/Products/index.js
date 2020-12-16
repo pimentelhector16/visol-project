@@ -68,7 +68,6 @@ export default function index(props) {
 
   return (
     <>
-    
       <Fade bottom cascade>
         <ul className="products">
           {props.products.map(function (product, index) {
@@ -93,7 +92,9 @@ export default function index(props) {
                     </div>
 
                     <div className="card_info">
-                      <div className="card_info_precio">{product.precio}</div>
+                      <div className="card_info_precio">
+                        {product.categoria}
+                      </div>
                     </div>
                   </a>
                   <div className="card_footer">
@@ -142,13 +143,13 @@ export default function index(props) {
                           (costoTotal = productAgree.onz.valor * cantidad);
                         productAgree.litro &&
                           form.medida === "litro" &&
-                          (costoTotal = productAgree.onz.valor * cantidad);
+                          (costoTotal = productAgree.litro.valor * cantidad);
                         productAgree.galon &&
                           form.medida === "galon" &&
-                          (costoTotal = productAgree.onz.valor * cantidad);
+                          (costoTotal = productAgree.galon.valor * cantidad);
                         productAgree.medida &&
                           form.medida === "unidad" &&
-                          (costoTotal = productAgree.onz.valor * cantidad);
+                          (costoTotal = productAgree.medida.valor * cantidad);
 
                         props.addToCart(
                           form.medida,
@@ -167,9 +168,7 @@ export default function index(props) {
                           value={form.medida}
                           onChange={handleChange}
                         >
-                          <option value="" disabled>
-                            Seleccione
-                          </option>
+                          <option value="">Seleccione</option>
                           {productAgree.onz && (
                             <option value="onzas">Onzas</option>
                           )}
@@ -315,8 +314,8 @@ export default function index(props) {
                     {product.descripcion}
                   </div>
                   <div className="product-details-price">
-                    Precio
-                    <strong>(product.precio)</strong>
+                    Categoria:
+                    <strong>{product.categoria}</strong>
                   </div>
                   <button
                     className="button_modal"
