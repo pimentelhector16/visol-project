@@ -1,13 +1,12 @@
 import Head from "next/head";
-import { productos } from "pages/api";
-import Products from "components/Products";
 import Cart from "components/Cart";
 import { useEffect, useState } from "react";
 import Filter from "components/Filter";
+import Products from "components/Products";
 
-export default function index() {
+function index({ products }) {
   const [state, setState] = useState({
-    products: productos,
+    products: products,
     cartItems:
       typeof window !== "undefined"
         ? window.localStorage.getItem("cartItems")
@@ -21,7 +20,6 @@ export default function index() {
   const createOrder = (order) => {
     alert("Necesito procesar orden del cliente: " + order.nombre);
   };
-
   const sortProducts = (e) => {
     const sort = e.target.value;
     setState((state) => ({
@@ -44,14 +42,13 @@ export default function index() {
         ),
     }));
   };
-
   const filterProducts = (e) => {
     e.target.value === ""
-      ? setState({ ...state, filter: e.target.value, products: productos })
+      ? setState({ ...state, filter: e.target.value, products: products })
       : setState({
           ...state,
           filter: e.target.value,
-          products: productos.filter(
+          products: products.filter(
             (producto) => producto.categoria.indexOf(e.target.value) >= 0
           ),
         });
@@ -79,11 +76,9 @@ export default function index() {
 
     setState({ ...state, cartItems });
   };
-
   useEffect(() => {
     window.localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
   });
-
   const removeFromCart = (product, medida) => {
     const cartItems = state.cartItems.slice();
 
@@ -115,29 +110,36 @@ export default function index() {
       </Head>
 
       <main>
-        <div className="main">
-          <section>
-            <div className="filter">
-              {state.products && (
-                <Filter
-                  count={state.products.length}
-                  filter={state.filter}
-                  sort={state.sort}
-                  filterProducts={filterProducts}
-                  sortProducts={sortProducts}
-                />
-              )}
-            </div>
-            <Products products={state.products} addToCart={addToCart} />
-          </section>
-          <aside>
-            <Cart
-              cartItems={state.cartItems}
-              removeFromCart={removeFromCart}
-              createOrder={createOrder}
-            />
-          </aside>
-        </div>
+        {state.products ? (
+          <div className="main">
+            <section>
+              <div className="filter">
+                {state.products && (
+                  <Filter
+                    count={state.products.length}
+                    filter={state.filter}
+                    sort={state.sort}
+                    filterProducts={filterProducts}
+                    sortProducts={sortProducts}
+                  />
+                )}
+              </div>
+              <Products products={state.products} addToCart={addToCart} />
+            </section>
+            <aside>
+              <Cart
+                cartItems={state.cartItems}
+                removeFromCart={removeFromCart}
+                createOrder={createOrder}
+              />
+            </aside>
+          </div>
+        ) : (
+          <div className="preloader">
+            <div className="loader"></div>
+          </div>
+        )}
+
         <style jsx>{`
           .main {
             display: grid;
@@ -145,6 +147,7 @@ export default function index() {
             grid-template-rows: auto;
             align-content: flex-start;
             aling-items: flex-start;
+            overflow-y: hidden;
           }
 
           section {
@@ -187,3 +190,16 @@ export default function index() {
     </div>
   );
 }
+
+export async function getStaticProps() {
+  const res = await fetch("http://buscameenguate.com/webservice/crud/data.php");
+  const products = await res.json();
+
+  return {
+    props: {
+      products,
+    },
+  };
+}
+
+export default index;

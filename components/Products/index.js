@@ -7,7 +7,7 @@ import Modal from "react-modal";
 // Estilos para el modal Grande
 const customStyles = {
   content: {
-    width: "80vw",
+    width: "80%",
     height: "auto",
     top: "50%",
     left: "50%",
