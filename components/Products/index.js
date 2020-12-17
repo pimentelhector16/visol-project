@@ -79,7 +79,7 @@ export default function index(props) {
                       <span>{product.nombre}</span>
                     </div>
                     <img
-                      src={`/productos/${product.imagen_thumb_url}`}
+                      src={`${product.imagen_thumb_url}`}
                       alt={product.nombre}
                       className="card_img"
                     />
@@ -114,6 +114,8 @@ export default function index(props) {
       {productAgree && (
         <Modal
           isOpen={true}
+          ariaHideApp={false}
+          contentLabel="Agregar a Carrito"
           onRequestClose={closeModalAgregar}
           style={customStylesSmall}
         >
@@ -130,7 +132,7 @@ export default function index(props) {
                 <div className="modal_form_body">
                   <div className="modal_form_img">
                     <img
-                      src={`/productos/${productAgree.imagen_thumb_url}`}
+                      src={`${productAgree.imagen_thumb_url}`}
                       alt={productAgree.nombre}
                     />
                   </div>
@@ -297,7 +299,13 @@ export default function index(props) {
         </Modal>
       )}
       {product && (
-        <Modal isOpen={true} onRequestClose={closeModal} style={customStyles}>
+        <Modal
+          isOpen={true}
+          ariaHideApp={false}
+          contentLabel="Ver Detalles"
+          onRequestClose={closeModal}
+          style={customStyles}
+        >
           <button className="close-modal" onClick={closeModal}>
             x
           </button>
@@ -306,7 +314,7 @@ export default function index(props) {
               <div className="product-details">
                 <img
                   className="product-details-img"
-                  src={`/productos/${product.imagen_url}`}
+                  src={`${product.imagen_url}`}
                   alt={product.nombre}
                 />
                 <div className="product-details-description">

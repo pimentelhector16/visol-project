@@ -3,6 +3,7 @@ import Cart from "components/Cart";
 import { useEffect, useState } from "react";
 import Filter from "components/Filter";
 import Products from "components/Products";
+import { loadFirebase } from "lib/db";
 
 function index({ products }) {
   const [state, setState] = useState({
@@ -192,8 +193,32 @@ function index({ products }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch("http://buscameenguate.com/webservice/crud/data.php");
-  const products = await res.json();
+  let firebase = loadFirebase();
+
+  let products = await new Promise((resolve, reject) => {
+    firebase
+      .firestore()
+      .collection("products")
+      .limit(10)
+      .get()
+      .then((snapshot) => {
+        let data = [];
+        snapshot.forEach((doc) => {
+          data.push(
+            Object.assign(
+              {
+                id: doc.id,
+              },
+              doc.data()
+            )
+          );
+        });
+        resolve(data);
+      })
+      .catch(() => {
+        reject([]);
+      });
+  });
 
   return {
     props: {

@@ -55,7 +55,7 @@ export default function index(props) {
                           <div>
                             <img
                               className="cart_item_img"
-                              src={`/productos/${item.imagen_thumb_url}`}
+                              src={`${item.imagen_thumb_url}`}
                               alt={item.nombre}
                               loading="lazy"
                             />
