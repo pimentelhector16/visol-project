@@ -3,35 +3,11 @@ import { useState } from "react";
 import Fade from "react-reveal/Fade";
 import Zoom from "react-reveal/Zoom";
 import Modal from "react-modal";
-
-// Estilos para el modal Grande
-const customStyles = {
-  content: {
-    width: "80%",
-    maxHeight: "100%",
-    height: "auto",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
-
-// Estilos para el modal pequeño y centrado
-const customStylesSmall = {
-  content: {
-    maxHeight: "100%",
-    height: "auto",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
+import {
+  modalStylesProductosDetails,
+  modalStylesProductosAgreeToCart,
+} from "styles/utils";
+import styles from "./products.module.css";
 
 export default function index(props) {
   const [cantidad, setCantidad] = useState(1);
@@ -71,37 +47,37 @@ export default function index(props) {
   return (
     <>
       <Fade bottom cascade>
-        <ul className="products">
+        <ul className={styles.products}>
           {props.products.map(function (product, index) {
             return (
               <li key={index}>
-                <div className="product">
+                <div className={styles.product}>
                   <a href={"#" + product.id} onClick={() => openModal(product)}>
-                    <div className="card_nombre">
+                    <div className={styles.cardNombre}>
                       <span>{product.nombre}</span>
                     </div>
                     <img
                       src={`${product.imagen_thumb_url}`}
                       alt={product.nombre}
-                      className="card_img"
+                      className={styles.cardImg}
                     />
-                    <div className="card_body">
-                      <div className="card_text_calification">
+                    <div className={styles.cardBody}>
+                      <div className={styles.cardTextCalification}>
                         <span>{product.rated}</span>/5
                         <FaStar />
                       </div>
                       <div>{product.marca}</div>
                     </div>
 
-                    <div className="card_info">
-                      <div className="card_info_precio">
+                    <div className={styles.cardInfo}>
+                      <div className={styles.cardInfoPrecio}>
                         {product.categoria}
                       </div>
                     </div>
                   </a>
-                  <div className="card_footer">
+                  <div className={styles.cardFooter}>
                     <button
-                      className="button"
+                      className={styles.button}
                       onClick={() => openModalAgregar(product)}
                     >
                       Añadir <FaShoppingCart />
@@ -119,26 +95,28 @@ export default function index(props) {
           ariaHideApp={false}
           contentLabel="Agregar a Carrito"
           onRequestClose={closeModalAgregar}
-          style={customStylesSmall}
+          style={modalStylesProductosAgreeToCart}
         >
           {" "}
-          <button onClick={closeModalAgregar} className="close-modal">
+          <button onClick={closeModalAgregar} className={styles.closeModal}>
             x
           </button>
           <Zoom>
-            <div className="modal_form">
+            <div className={styles.modalForm}>
               <div>
                 <div>
-                  <h2 className="modal_form_title">{productAgree.nombre}</h2>
+                  <h2 className={styles.modalFormTitle}>
+                    {productAgree.nombre}
+                  </h2>
                 </div>
-                <div className="modal_form_body">
-                  <div className="modal_form_img">
+                <div className={styles.modalFormBody}>
+                  <div className={styles.modalFormImg}>
                     <img
                       src={`${productAgree.imagen_thumb_url}`}
                       alt={productAgree.nombre}
                     />
                   </div>
-                  <div className="modal_form_container">
+                  <div className={styles.modalFormContainer}>
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -189,7 +167,7 @@ export default function index(props) {
                         </select>
 
                         <div>
-                          <div className="number-input">
+                          <div className={styles.numberInput}>
                             <button
                               onClick={(e) => {
                                 e.preventDefault();
@@ -197,7 +175,7 @@ export default function index(props) {
                                   ? setCantidad(1)
                                   : setCantidad(cantidad - 1);
                               }}
-                              className="button-plus"
+                              className={styles.buttonPlus}
                             >
                               -
                             </button>
@@ -215,12 +193,12 @@ export default function index(props) {
                                 e.preventDefault();
                                 setCantidad(cantidad + 1);
                               }}
-                              className="button-plus"
+                              className={styles.buttonPlus}
                             >
                               +
                             </button>
                           </div>
-                          <div className="text-footer-total">
+                          <div className={styles.textFooterTotal}>
                             <div>
                               {productAgree.onz && form.medida === "onzas" && (
                                 <>
@@ -286,7 +264,7 @@ export default function index(props) {
                             </div>
                           </div>
                           <div>
-                            <button className="button" type="submit">
+                            <button className={styles.button} type="submit">
                               Añadir a <FaShoppingCart />
                             </button>
                           </div>
@@ -306,25 +284,25 @@ export default function index(props) {
           ariaHideApp={false}
           contentLabel="Ver Detalles"
           onRequestClose={closeModal}
-          style={customStyles}
+          style={modalStylesProductosDetails}
         >
-          <button className="close-modal" onClick={closeModal}>
+          <button className={styles.closeModal} onClick={closeModal}>
             x
           </button>
           <Zoom>
-            <div className="product-container">
-              <div className="product-details">
+            <div className={styles.productContainer}>
+              <div className={styles.productDetails}>
                 <img
-                  className="product-details-img"
+                  className={styles.productDetailsImg}
                   src={`${product.imagen_url}`}
                   alt={product.nombre}
                 />
-                <div className="product-details-description">
-                  <p className="product-details-description-title">
+                <div className={styles.productDetailsDescription}>
+                  <p className={styles.productDetailsDescriptionTitle}>
                     <strong>{product.nombre}</strong>
                   </p>
                   <div>
-                    <div className="product-details-description-p">
+                    <div className={styles.productDetailsDescriptionP}>
                       <small>Descripción: </small>
                       {product.descripcion}
                     </div>
@@ -334,13 +312,13 @@ export default function index(props) {
                       {product.categoria}
                     </div>
                     {product.aromas && (
-                      <div className="product-details-aromas">
+                      <div className={styles.productDetailsAromas}>
                         <strong>Aromas: </strong>
                         <ul>
                           {product.aromas &&
                             product.aromas.map((aroma) => {
                               return (
-                                <li key={aroma} className="aromas-li">
+                                <li key={aroma} className={styles.aromasLi}>
                                   {aroma}
                                 </li>
                               );
@@ -350,7 +328,7 @@ export default function index(props) {
                     )}
                   </div>
                   <button
-                    className="button_modal"
+                    className={styles.buttonModal}
                     onClick={() => {
                       closeModal();
                       openModalAgregar(product);
@@ -364,227 +342,6 @@ export default function index(props) {
           </Zoom>
         </Modal>
       )}
-
-      <style jsx>{`
-        .products {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-          grid-gap: 1em;
-          justify-content: space-around;
-          align-items: flex-start;
-          align-content: flex-start;
-        }
-        .products li {
-          flex: 1 auto;
-          padding: 1rem;
-          list-style: none;
-        }
-        .product {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          height: 100%;
-          background: white;
-          border-radius: 10px;
-          box-shadow: 1px 6px 15px 1px #d9e3ec;
-        }
-
-        .card_nombre {
-          background: #0d3362;
-          color: white;
-          text-align: center;
-          padding: 1em;
-          height: 70px;
-          border-radius: 10px 10px 0px 0px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        .card_img {
-          width: 100%;
-        }
-
-        .card_text_calification {
-          color: #f16722;
-          text-align: right;
-        }
-        .card_body {
-          padding: 0.5em;
-          color: #0d3362;
-          display: flex;
-          flex-direction: row-reverse;
-          justify-content: space-between;
-        }
-        .card_categoria {
-          color: #0d3362;
-          text-align: center;
-          font-size: 1em;
-        }
-        .card_description {
-          text-align: justify;
-        }
-        .card_info {
-          color: #474744;
-        }
-        .card_info_precio {
-          background: #f16722;
-          padding: 0.5em;
-          font-weight: 700;
-          color: white;
-          text-align: center;
-        }
-
-        .card_footer {
-          padding: 22px;
-          position: relative;
-          bottom: 0;
-          width: 100%;
-        }
-
-        .button {
-          padding: 10px;
-          border: 1px solid #0d3362;
-          position: relative;
-          outline: none;
-          border-radius: 5px;
-          background: #f0f0f0;
-          color: #292d48;
-          font-size: 18px;
-          width: 100%;
-        }
-        .button:hover {
-          background: #0d3362;
-          color: white;
-        }
-
-        /* FORMULARIO */
-        .product-container {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 100%;
-        }
-        .product-details {
-          display: flex;
-          flex-direction: row;
-          margin: 0 auto;
-          padding: 2em;
-          font-size: clamp(1em, 1vw, 1rem);
-        }
-
-        @media (max-width: 800px) {
-          .product-details {
-            flex-direction: column;
-          }
-        }
-
-        .product-details-img {
-          min-width: 15rem;
-          max-width: 50%;
-          max-height: 15rem;
-          margin: 0 auto;
-        }
-
-        .product-details-description {
-          padding: 1em;
-        }
-
-        .product-details-aromas {
-          padding: 1em;
-        }
-
-        .close-modal {
-          position: absolute;
-          right: 1em;
-          top: 1em;
-          padding: 1em;
-          z-index: 1000;
-          background: #0d3362;
-          color: white;
-        }
-
-        .button_modal {
-          padding: 1em;
-          float: right;
-          background: #0d3362;
-          color: white;
-        }
-
-        .product-details-description-title {
-          font-size: 1.4em;
-          color: #0d3362;
-        }
-        .product-details-description-p {
-          text-align: justify;
-        }
-        .product-details-sizes {
-          padding: 1em;
-          list-style: none;
-        }
-        .aromas-li {
-          list-style-type: square;
-          display: inline-block;
-          padding: 1em;
-          margin: 0.5em;
-          background: #f16722;
-          color: white;
-        }
-        .aromas-li:hover {
-          opacity: 80%;
-        }
-
-        /* FORMULARIO */
-        .modal_form {
-          display: grid;
-          grid-template-columns: 1fr auto;
-          grid-template-rows: auto;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          margin: 0 auto;
-          padding-top: 3em;
-        }
-        .modal_form_title {
-          text-align: center;
-        }
-
-        .modal_form_body {
-          display: flex;
-          align-items: center;
-          flex-direction: column;
-        }
-        .modal_form_img img {
-          width: 15em;
-          position: relative;
-        }
-
-        .modal_form_container {
-          padding: 1em;
-        }
-
-        .number-input {
-          display: flex;
-          justify-content: inherit;
-        }
-        .text-footer-total {
-          margin: 0.5em;
-          display: flex;
-          flex-direction: column;
-          font-size: clamp(1.1rem, 1vw, 1.1rem);
-          color: #0d3362;
-          padding: 1em;
-          text-align: center;
-        }
-        .text-footer-total div {
-          padding: 1em;
-        }
-        .button-plus {
-          padding: 1em;
-          color: white;
-          background: #0d3362;
-        }
-      `}</style>
     </>
   );
 }
