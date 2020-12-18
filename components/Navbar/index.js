@@ -21,7 +21,7 @@ export default function navbar() {
     <header className={style.top}>
       <section>
         <nav
-          className={`${style.navbar} ${
+          className={`bg-blue-900 ${style.navbar} ${
             (menuStatus && style.show) || (cancelStatus && style.show)
           } `}
         >

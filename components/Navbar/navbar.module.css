@@ -6,7 +6,7 @@
 }
 
 .navbar {
-  background: linear-gradient(#104c97 0%, #0d3362 100%);
+  
   border-bottom: 1px solid var(--main-primary);
   display: flex;
   top: 0;

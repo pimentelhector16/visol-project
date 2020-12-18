@@ -10,7 +10,6 @@
   justify-content: center;
   text-align: center;
   padding: 0.5em;
-  background: #0d3362;
   color: white;
   border-radius: 0.5em;
 }
@@ -48,7 +47,6 @@
 }
 
 .button {
-  background-color: #0d3362;
   color: white;
   padding: 0.2em;
   border-radius: 1em;
@@ -62,7 +60,6 @@
   width: 100%;
 }
 .proceder {
-  background-color: #0d3362;
   color: white;
   padding: 0.5em;
   border-radius: 12px;

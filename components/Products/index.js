@@ -47,40 +47,38 @@ export default function index(props) {
   return (
     <>
       <Fade bottom cascade>
-        <ul className={styles.products}>
+        <ul className="grid grid-cols-12 gap-2 items-start mx-auto">
           {props.products.map(function (product, index) {
             return (
-              <li key={index}>
-                <div className={styles.product}>
+              <li
+                key={index}
+                className="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-4 shadow-lg"
+              >
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden ">
                   <a href={"#" + product.id} onClick={() => openModal(product)}>
-                    <div className={styles.cardNombre}>
-                      <span>{product.nombre}</span>
+                    <div className="mx-auto h-20 flex-grow flex justify-center items-center ">
+                      <div>
+                        <h1 className="text-gray-600 font-bold text-md uppercase p-2">
+                          {product.nombre}
+                        </h1>
+                        <p className="text-gray-400 text-sm mt-1">
+                          {product.marca}
+                        </p>
+                      </div>
                     </div>
                     <img
-                      src={`${product.imagen_thumb_url}`}
+                      className="h-56 w-full object-cover mt-2"
+                      src={product.imagen_thumb_url}
                       alt={product.nombre}
-                      className={styles.cardImg}
                     />
-                    <div className={styles.cardBody}>
-                      <div className={styles.cardTextCalification}>
-                        <span>{product.rated}</span>/5
-                        <FaStar />
-                      </div>
-                      <div>{product.marca}</div>
-                    </div>
-
-                    <div className={styles.cardInfo}>
-                      <div className={styles.cardInfoPrecio}>
-                        {product.categoria}
-                      </div>
-                    </div>
                   </a>
-                  <div className={styles.cardFooter}>
+                  <div className="flex items-center justify-between px-4 py-2 bg-blue-900">
+                    <h3 className="text-white text-sm">{product.categoria}</h3>
                     <button
-                      className={styles.button}
+                      className="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded "
                       onClick={() => openModalAgregar(product)}
                     >
-                      Añadir <FaShoppingCart />
+                      Añadir a Carrito
                     </button>
                   </div>
                 </div>
@@ -105,7 +103,7 @@ export default function index(props) {
             <div className={styles.modalForm}>
               <div>
                 <div>
-                  <h2 className={styles.modalFormTitle}>
+                  <h2 className="font-semibold mb-2 text-2xl leading-tight text-center sm:leading-normal">
                     {productAgree.nombre}
                   </h2>
                 </div>
@@ -150,6 +148,7 @@ export default function index(props) {
                           required
                           value={form.medida}
                           onChange={handleChange}
+                          className="border rounded-md px-4 py-2 mb-2"
                         >
                           <option value="">Seleccione</option>
                           {productAgree.onz && (
@@ -175,17 +174,19 @@ export default function index(props) {
                                   ? setCantidad(1)
                                   : setCantidad(cantidad - 1);
                               }}
-                              className={styles.buttonPlus}
+                              className="bg-red-700 text-white p-4"
                             >
                               -
                             </button>
 
                             <input
-                              min="0"
+                              min="1"
                               name="cantidad"
                               value={cantidad}
                               onChange={handleChange}
                               type="number"
+                              class="md:p-2 p-1 text-xs md:text-base border-gray-400 focus:outline-none text-center"
+                              readonly
                             />
 
                             <button
@@ -193,79 +194,107 @@ export default function index(props) {
                                 e.preventDefault();
                                 setCantidad(cantidad + 1);
                               }}
-                              className={styles.buttonPlus}
+                              className="bg-blue-700 text-white p-4"
                             >
                               +
                             </button>
                           </div>
-                          <div className={styles.textFooterTotal}>
-                            <div>
-                              {productAgree.onz && form.medida === "onzas" && (
-                                <>
-                                  <small>
-                                    Valor por {productAgree.onz.medida} Onzas:{" "}
-                                  </small>
-                                  {productAgree.moneda} {productAgree.onz.valor}
-                                </>
-                              )}
-                              {productAgree.litro && form.medida === "litro" && (
-                                <>
-                                  <small>Valor por Litro: </small>
-                                  {productAgree.moneda}{" "}
-                                  {productAgree.litro.valor}
-                                </>
-                              )}
-                              {productAgree.galon && form.medida === "galon" && (
-                                <>
-                                  <small>Valor por Galón: </small>
-                                  {productAgree.moneda}{" "}
-                                  {productAgree.galon.valor}
-                                </>
-                              )}
-                              {productAgree.medida && form.medida === "unidad" && (
-                                <>
-                                  <small>Valor por Unidad: </small>
-                                  {productAgree.moneda} {productAgree.precio}
-                                </>
-                              )}
-                            </div>
-                            <div>
-                              <strong>
-                                {productAgree.onz && form.medida === "onzas" && (
-                                  <>
-                                    <small>Valor Total: </small>
-                                    {productAgree.moneda}
-                                    {productAgree.onz.valor * cantidad}
-                                  </>
-                                )}
-                                {productAgree.litro && form.medida === "litro" && (
-                                  <>
-                                    <small>Valor Total: </small>
-                                    {productAgree.moneda}
-                                    {productAgree.litro.valor * cantidad}
-                                  </>
-                                )}
-                                {productAgree.galon && form.medida === "galon" && (
-                                  <>
-                                    <small>Valor Total: </small>
-                                    {productAgree.moneda}
-                                    {productAgree.galon.valor * cantidad}
-                                  </>
-                                )}
-                                {productAgree.medida &&
-                                  form.medida === "unidad" && (
+                          {form.medida !== "" && (
+                            <div className="alert flex flex-row items-center bg-blue-200 p-5 rounded border-b-2 border-blue-300">
+                              <div className="alert-icon flex items-center bg-blue-100 border-2 border-blue-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+                                <span className="text-blue-500">
+                                  <svg
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    className="h-6 w-6"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                      clip-rule="evenodd"
+                                    ></path>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div className="alert-content ml-4">
+                                <div className="alert-title font-semibold text-lg text-blue-800">
+                                  {productAgree.onz && form.medida === "onzas" && (
+                                    <>
+                                      <small>
+                                        Valor por {productAgree.onz.medida}{" "}
+                                        Onzas:{" "}
+                                      </small>
+                                      {productAgree.moneda}{" "}
+                                      {productAgree.onz.valor}
+                                    </>
+                                  )}
+                                  {productAgree.litro &&
+                                    form.medida === "litro" && (
+                                      <>
+                                        <small>Valor por Litro: </small>
+                                        {productAgree.moneda}{" "}
+                                        {productAgree.litro.valor}
+                                      </>
+                                    )}
+                                  {productAgree.galon &&
+                                    form.medida === "galon" && (
+                                      <>
+                                        <small>Valor por Galón: </small>
+                                        {productAgree.moneda}{" "}
+                                        {productAgree.galon.valor}
+                                      </>
+                                    )}
+                                  {productAgree.medida &&
+                                    form.medida === "unidad" && (
+                                      <>
+                                        <small>Valor por Unidad: </small>
+                                        {productAgree.moneda}{" "}
+                                        {productAgree.precio}
+                                      </>
+                                    )}
+                                </div>
+                                <div className="alert-description text-md text-blue-600">
+                                  {productAgree.onz && form.medida === "onzas" && (
                                     <>
                                       <small>Valor Total: </small>
                                       {productAgree.moneda}
-                                      {productAgree.precio * cantidad}
+                                      {productAgree.onz.valor * cantidad}
                                     </>
                                   )}
-                              </strong>
+                                  {productAgree.litro &&
+                                    form.medida === "litro" && (
+                                      <>
+                                        <small>Valor Total: </small>
+                                        {productAgree.moneda}
+                                        {productAgree.litro.valor * cantidad}
+                                      </>
+                                    )}
+                                  {productAgree.galon &&
+                                    form.medida === "galon" && (
+                                      <>
+                                        <small>Valor Total: </small>
+                                        {productAgree.moneda}
+                                        {productAgree.galon.valor * cantidad}
+                                      </>
+                                    )}
+                                  {productAgree.medida &&
+                                    form.medida === "unidad" && (
+                                      <>
+                                        <small>Valor Total: </small>
+                                        {productAgree.moneda}
+                                        {productAgree.precio * cantidad}
+                                      </>
+                                    )}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <div>
-                            <button className={styles.button} type="submit">
-                              Añadir a <FaShoppingCart />
+                          )}
+                          <div className="mx-auto text-center m2 p2">
+                            <button
+                              type="submit"
+                              class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-700 rounded shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"
+                            >
+                              Añadir a Carrito
                             </button>
                           </div>
                         </div>
@@ -328,13 +357,13 @@ export default function index(props) {
                     )}
                   </div>
                   <button
-                    className={styles.buttonModal}
+                    className="bg-blue-900 text-white text-md p-2 float-right border rounded"
                     onClick={() => {
                       closeModal();
                       openModalAgregar(product);
                     }}
                   >
-                    Añadir <FaShoppingCart />
+                    Añadir a Carrito
                   </button>
                 </div>
               </div>

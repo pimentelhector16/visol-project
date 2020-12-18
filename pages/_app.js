@@ -1,4 +1,5 @@
 import Layout from "components/Layout";
+import "tailwindcss/tailwind.css";
 import "styles/globals.css";
 import { StateCartProvider } from "hooks/useContext";
 

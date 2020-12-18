@@ -93,7 +93,7 @@ function index({ products }) {
   };
 
   return (
-    <div className="container">
+    <div className="container mx-auto">
       <Head>
         <title>Visol - Productos </title>
         <link rel="icon" href="/favicon.ico" />
@@ -109,85 +109,41 @@ function index({ products }) {
           content="width=device-width, initial-scale=1,  user-scalable=no"
         />
       </Head>
+      {state.products ? (
+        <>
+          <main className="flex-grow flex justify-center items-center ">
+            <div className="mx-auto p-2 text-center ">
+              <div className="grid grid-cols-12 items-start mx-auto p-2">
+                <div className="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 pb-2 min-w-full">
+                  {state.products && (
+                    <Filter
+                      count={state.products.length}
+                      filter={state.filter}
+                      sort={state.sort}
+                      filterProducts={filterProducts}
+                      sortProducts={sortProducts}
+                    />
+                  )}
 
-      <main>
-        {state.products ? (
-          <div className="main">
-            <section>
-              <div className="filter">
-                {state.products && (
-                  <Filter
-                    count={state.products.length}
-                    filter={state.filter}
-                    sort={state.sort}
-                    filterProducts={filterProducts}
-                    sortProducts={sortProducts}
+                  <Products products={state.products} addToCart={addToCart} />
+                </div>
+
+                <div className="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 pb-2">
+                  <Cart
+                    cartItems={state.cartItems}
+                    removeFromCart={removeFromCart}
+                    createOrder={createOrder}
                   />
-                )}
+                </div>
               </div>
-              <Products products={state.products} addToCart={addToCart} />
-            </section>
-            <aside>
-              <Cart
-                cartItems={state.cartItems}
-                removeFromCart={removeFromCart}
-                createOrder={createOrder}
-              />
-            </aside>
-          </div>
-        ) : (
-          <div className="preloader">
-            <div className="loader"></div>
-          </div>
-        )}
-
-        <style jsx>{`
-          .main {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto;
-            align-content: flex-start;
-            aling-items: flex-start;
-            overflow-y: hidden;
-          }
-
-          section {
-            padding: 1em;
-            width: 70vw;
-          }
-
-          .filter {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-          }
-
-          aside {
-            padding: 2em;
-            margin: 0 auto;
-          }
-
-          @media (max-width: 800px) {
-            .main {
-              grid-template-columns: 1fr;
-            }
-            .filter {
-              justify-content: center;
-              align-items: center;
-            }
-            section {
-              padding: 1em;
-              width: 100vw;
-            }
-            aside {
-              padding: 1em;
-              width: 100vw;
-            }
-          }
-        `}</style>
-      </main>
+            </div>
+          </main>
+        </>
+      ) : (
+        <div classNameName="preloader">
+          <div classNameName="loader"></div>
+        </div>
+      )}
     </div>
   );
 }

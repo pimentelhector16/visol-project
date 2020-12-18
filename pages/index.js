@@ -1,5 +1,4 @@
 import Head from "next/head";
-import "styles/home.module.css";
 
 export default function Home() {
   return (
@@ -19,10 +18,6 @@ export default function Home() {
           content="width=device-width, initial-scale=1,  user-scalable=no"
         />
       </Head>
-
-      <main className="main">
-        <section className="heroMain"></section>
-      </main>
     </div>
   );
 }

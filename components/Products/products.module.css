@@ -22,7 +22,7 @@
 }
 
 .cardNombre {
-  background: #0d3362;
+  background: #1e3a8a;
   color: white;
   text-align: center;
   padding: 1em;
@@ -42,13 +42,13 @@
 }
 .cardBody {
   padding: 0.5em;
-  color: #0d3362;
+  color: #1e3a8a;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
 }
 .cardCategoria {
-  color: #0d3362;
+  color: #1e3a8a;
   text-align: center;
   font-size: 1em;
 }
@@ -71,22 +71,6 @@
   position: relative;
   bottom: 0;
   width: 100%;
-}
-
-.button {
-  padding: 10px;
-  border: 1px solid #0d3362;
-  position: relative;
-  outline: none;
-  border-radius: 5px;
-  background: #f0f0f0;
-  color: #292d48;
-  font-size: 18px;
-  width: 100%;
-}
-.button:hover {
-  background: #0d3362;
-  color: white;
 }
 
 /* FORMULARIO */
@@ -132,20 +116,20 @@
   top: 1em;
   padding: 1em;
   z-index: 1000;
-  background: #0d3362;
+  background: #1e3a8a;
   color: white;
 }
 
 .buttonModal {
   padding: 1em;
   float: right;
-  background: #0d3362;
+  background: #1e3a8a;
   color: white;
 }
 
 .productDetailsDescriptionTitle {
   font-size: 1.4em;
-  color: #0d3362;
+  color: #1e3a8a;
 }
 .productDetailsDescriptionP {
   text-align: justify;
@@ -204,7 +188,7 @@
   display: flex;
   flex-direction: column;
   font-size: clamp(1.1rem, 1vw, 1.1rem);
-  color: #0d3362;
+  color: #1e3a8a;
   padding: 1em;
   text-align: center;
 }
@@ -214,5 +198,5 @@
 .buttonPlus {
   padding: 1em;
   color: white;
-  background: #0d3362;
+  background: #1e3a8a;
 }
