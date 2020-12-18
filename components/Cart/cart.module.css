@@ -1,0 +1,96 @@
+.section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cartTitle {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5em;
+  background: #0d3362;
+  color: white;
+  border-radius: 0.5em;
+}
+.cartText {
+  text-align: center;
+  font-size: 0.8em;
+  padding: 0.5em;
+}
+.cartItems {
+  padding: 1em;
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+}
+
+.cartItemImg {
+  padding: 0;
+  width: 3rem;
+  border-radius: 10px;
+}
+.cartItem {
+  list-style: none;
+  display: flex;
+  padding: 0.5em;
+}
+.cartItem div {
+  padding: 0;
+}
+.cartItem div:last-child {
+  flex: 1;
+}
+.text {
+  padding: 1em;
+  margin-left: 1em;
+}
+
+.button {
+  background-color: #0d3362;
+  color: white;
+  padding: 0.2em;
+  border-radius: 1em;
+}
+
+.procederCart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  width: 100%;
+}
+.proceder {
+  background-color: #0d3362;
+  color: white;
+  padding: 0.5em;
+  border-radius: 12px;
+}
+.cartItemText {
+  display: flex;
+  flex-direction: column;
+}
+.right {
+  float: right;
+}
+/* FORM CHECKOUT */
+.form {
+  width: 100%;
+}
+.formContainer {
+  width: 100%;
+  padding: 0;
+  list-style: none;
+  background: white;
+  border-radius: 10px;
+}
+.formContainer li {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.input {
+  border: 0.1rem solid #bbc1c1;
+}

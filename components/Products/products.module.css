@@ -1,0 +1,218 @@
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  grid-gap: 1em;
+  justify-content: space-around;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+.products li {
+  flex: 1 auto;
+  padding: 1rem;
+  list-style: none;
+}
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 1px 6px 15px 1px #d9e3ec;
+}
+
+.cardNombre {
+  background: #0d3362;
+  color: white;
+  text-align: center;
+  padding: 1em;
+  height: 70px;
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cardImg {
+  width: 100%;
+}
+
+.cardTextCalification {
+  color: #f16722;
+  text-align: right;
+}
+.cardBody {
+  padding: 0.5em;
+  color: #0d3362;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+.cardCategoria {
+  color: #0d3362;
+  text-align: center;
+  font-size: 1em;
+}
+.cardDescription {
+  text-align: justify;
+}
+.cardInfo {
+  color: #474744;
+}
+.cardInfoPrecio {
+  background: #f16722;
+  padding: 0.5em;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
+
+.cardFooter {
+  padding: 22px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.button {
+  padding: 10px;
+  border: 1px solid #0d3362;
+  position: relative;
+  outline: none;
+  border-radius: 5px;
+  background: #f0f0f0;
+  color: #292d48;
+  font-size: 18px;
+  width: 100%;
+}
+.button:hover {
+  background: #0d3362;
+  color: white;
+}
+
+/* FORMULARIO */
+.productContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.productDetails {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  padding: 2em;
+  font-size: clamp(1em, 1vw, 1rem);
+}
+
+@media (max-width: 800px) {
+  .productDetails {
+    flex-direction: column;
+  }
+}
+
+.productDetailsImg {
+  min-width: 15rem;
+  max-width: 50%;
+  max-height: 15rem;
+  margin: 0 auto;
+}
+
+.productDetailsDescription {
+  padding: 1em;
+}
+
+.productDetailsAromas {
+  padding: 1em;
+}
+
+.closeModal {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  padding: 1em;
+  z-index: 1000;
+  background: #0d3362;
+  color: white;
+}
+
+.buttonModal {
+  padding: 1em;
+  float: right;
+  background: #0d3362;
+  color: white;
+}
+
+.productDetailsDescriptionTitle {
+  font-size: 1.4em;
+  color: #0d3362;
+}
+.productDetailsDescriptionP {
+  text-align: justify;
+}
+.productDetailsSizes {
+  padding: 1em;
+  list-style: none;
+}
+.aromasLi {
+  list-style-type: square;
+  display: inline-block;
+  padding: 1em;
+  margin: 0.5em;
+  background: #f16722;
+  color: white;
+}
+.aromasLi:hover {
+  opacity: 80%;
+}
+
+/* FORMULARIO */
+.modalForm {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 3em;
+}
+.modalFormTitle {
+  text-align: center;
+}
+
+.modalFormBody {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.modalFormImg img {
+  width: 15em;
+  position: relative;
+}
+
+.modalFormContainer {
+  padding: 1em;
+}
+
+.numberInput {
+  display: flex;
+  justify-content: inherit;
+}
+.textFooterTotal {
+  margin: 0.5em;
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(1.1rem, 1vw, 1.1rem);
+  color: #0d3362;
+  padding: 1em;
+  text-align: center;
+}
+.textFooterTotal div {
+  padding: 1em;
+}
+.buttonPlus {
+  padding: 1em;
+  color: white;
+  background: #0d3362;
+}
