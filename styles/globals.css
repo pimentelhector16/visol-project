@@ -12,7 +12,7 @@
 :root {
   --main-menu: #ffffff;
   --main-primary: #f16722;
-  --main-secundary: #0d3362;
+  --main-secundary: #1e3a8a;
   --main-page: #474744;
   --main-title: #0056c5;
 }
@@ -23,8 +23,8 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
     Helvetica Neue, sans-serif;
-  background-color: #f1f2fa;
-  color: #0d3362;
+  
+  color: #4b5563;
   overflow-x: hidden;
 }
 
@@ -33,18 +33,7 @@ a {
   text-decoration: none;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="number"] {
-  width: 100%;
-  padding: 8px 20px;
-  box-sizing: border-box;
-  height: 50px;
-  outline: none;
-  background-color: #fff;
-  color: #0d3362;
-  font-size: 1em;
-}
+
 select {
   position: relative;
   overflow: hidden;
@@ -75,7 +64,6 @@ select::selection {
   width: 100vw;
   height: 100px;
   display: flex;
-  background:  var(--main-secundary);
   border-top: 1px solid var(--main-primary);
   color: white;
   justify-content: center;

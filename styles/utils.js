@@ -1,6 +1,7 @@
 // Estilos para el modal Grande
 export const modalStylesProductosDetails = {
   content: {
+    background: "rgba(249, 250, 251, 1)",
     width: "80%",
     maxHeight: "100%",
     height: "auto",
@@ -16,7 +17,8 @@ export const modalStylesProductosDetails = {
 // Estilos para el modal pequeño y centrado
 export const modalStylesProductosAgreeToCart = {
   content: {
-    maxHeight: "100%",
+    background: "rgba(249, 250, 251, 1)",
+    maxHeight: "100vh",
     height: "auto",
     top: "50%",
     left: "50%",
@@ -26,3 +28,10 @@ export const modalStylesProductosAgreeToCart = {
     transform: "translate(-50%, -50%)",
   },
 };
+
+export const images = [
+  "/hero/herobg.jpg",
+  "/hero/herobg2.jpg",
+  "/hero/herobg3.jpg",
+  "/hero/herobg4.jpg",
+];
