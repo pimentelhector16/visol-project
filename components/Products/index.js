@@ -8,6 +8,7 @@ import Modal from "react-modal";
 const customStyles = {
   content: {
     width: "80%",
+    maxHeight: "100%",
     height: "auto",
     top: "50%",
     left: "50%",
@@ -21,6 +22,7 @@ const customStyles = {
 // Estilos para el modal pequeño y centrado
 const customStylesSmall = {
   content: {
+    maxHeight: "100%",
     height: "auto",
     top: "50%",
     left: "50%",
