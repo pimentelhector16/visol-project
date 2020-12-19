@@ -307,11 +307,7 @@ export default function index(props) {
           </Zoom>
         </Modal>
       )}
-      {product && (
-        <Modal
-          isOpen={true}
-          ariaHideApp={false}
-          contentLabel="Ver Detalles"
+      {product && ( <Modal isOpen={true} ariaHideApp={false} contentLabel="Ver Detalles"
           onRequestClose={closeModal}
           style={modalStylesProductosDetails}
         >
@@ -357,7 +353,7 @@ export default function index(props) {
                     )}
                   </div>
                   <button
-                    className="bg-blue-900 text-white text-md p-2 float-right border rounded"
+                    className="bg-blue-900 text-white text-md p-2 float-right border rounded-md"
                     onClick={() => {
                       closeModal();
                       openModalAgregar(product);

@@ -16,7 +16,6 @@ module.exports = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
-
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,
@@ -74,6 +73,8 @@ module.exports = {
     },
     backgroundColor: (theme) => theme("colors"),
     backgroundImage: {
+      heropattern: "url('/hero/hero2.jpg')",
+      banner: "url('/hero/hero5.jpg')",
       none: "none",
       "gradient-to-t": "linear-gradient(to top, var(--tw-gradient-stops))",
       "gradient-to-tr":

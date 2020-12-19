@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Filter from "components/Filter";
 import Products from "components/Products";
 import { loadFirebase } from "lib/db";
+import toaster from "toasted-notes";
+import "toasted-notes/src/styles.css";
 
 function index({ products }) {
   const [state, setState] = useState({
@@ -76,6 +78,17 @@ function index({ products }) {
     }
 
     setState({ ...state, cartItems });
+
+    toaster.notify(() => (
+      <div className="p-2 bg-orange-500 text-white border-orange-500 rounded-md flex flex-column items-center">
+        <img
+          src={product.imagen_thumb_url}
+          alt={product.id}
+          className="border rounded-md h-10 w-10 m-2"
+        />
+        <span>Has Añadido un Producto a Carrito</span>
+      </div>
+    ));
   };
   useEffect(() => {
     window.localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
@@ -90,6 +103,16 @@ function index({ products }) {
         (item) => item.id !== product.id || item.medida !== medida
       ),
     });
+    toaster.notify(() => (
+      <div className="p-2 bg-red-500 text-white border-red-500 rounded-md flex flex-column items-center">
+        <img
+          src={product.imagen_thumb_url}
+          alt={product.id}
+          className="border rounded-md h-10 w-10 m-2"
+        />
+        <span>Has Eliminado un Producto del Carrito</span>
+      </div>
+    ));
   };
 
   return (
@@ -140,8 +163,8 @@ function index({ products }) {
           </main>
         </>
       ) : (
-        <div classNameName="preloader">
-          <div classNameName="loader"></div>
+        <div className="preloader">
+          <div className="loader"></div>
         </div>
       )}
     </div>

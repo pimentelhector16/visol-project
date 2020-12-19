@@ -21,14 +21,14 @@ export default function navbar() {
     <header className={style.top}>
       <section>
         <nav
-          className={`bg-blue-900 ${style.navbar} ${
+          className={` bg-blue-900 ${style.navbar} ${
             (menuStatus && style.show) || (cancelStatus && style.show)
           } `}
         >
           <div className={style.content}>
             <div className={style.logo_navbar}>
               <img src="visol2.png" className={style.navbarLogo} />
-              <h1>Visol</h1>
+              <h1 className="text-white text-bold text-4xl">Visol</h1>
             </div>
             <ul className={style.menuList}>
               <div

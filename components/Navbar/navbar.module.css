@@ -6,7 +6,6 @@
 }
 
 .navbar {
-  
   border-bottom: 1px solid var(--main-primary);
   display: flex;
   top: 0;

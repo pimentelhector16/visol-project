@@ -15,11 +15,13 @@
     "next": "10.0.3",
     "postcss": "^8.2.1",
     "react": "17.0.1",
-    "react-dom": "17.0.1",
+    "react-dom": "^17.0.1",
     "react-icons": "^4.1.0",
     "react-modal": "^3.12.1",
     "react-reveal": "^1.2.2",
-    "tailwindcss": "^2.0.2"
+    "react-spring": "^8.0.27",
+    "tailwindcss": "^2.0.2",
+    "toasted-notes": "^3.2.0"
   },
   "devDependencies": {
     "eslint": "^7.15.0",
