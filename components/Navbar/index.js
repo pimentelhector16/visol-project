@@ -18,10 +18,10 @@ export default function navbar() {
   };
 
   return (
-    <header className={style.top}>
+    <header className="h-full">
       <section>
         <nav
-          className={` bg-blue-900 ${style.navbar} ${
+          className={`min-h-100 bg-blue-900 ${style.navbar} ${
             (menuStatus && style.show) || (cancelStatus && style.show)
           } `}
         >
@@ -39,7 +39,7 @@ export default function navbar() {
               </div>
               {items.map((item, index) => {
                 return (
-                  <li key={index}>
+                  <li key={index} onClick={handleMenuOpen}>
                     <Link href={item.url}>
                       <a className={item.cName}>{item.title}</a>
                     </Link>

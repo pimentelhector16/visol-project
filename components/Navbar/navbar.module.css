@@ -1,15 +1,7 @@
-.top {
-  position: relative;
-  top: 0;
-  width: 100vw;
-  
-}
-
 .navbar {
   border-bottom: 1px solid var(--main-primary);
   display: flex;
   top: 0;
-  
 }
 
 .logo_navbar {
