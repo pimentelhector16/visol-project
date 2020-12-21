@@ -11,9 +11,9 @@ export default function index() {
   });
 
   const onSubmit = (data) => {
-    emailjs.init("user_kwCQU3k2jfNLYGqNONXRO");
+    emailjs.init(process.env.USER_ID_EMAILJS);
 
-    const serviceID = "service_mn48zz6";
+    const serviceID = process.env.SERVICE_ID;
     const templateID = "template_contact";
 
     var templateParams = {
