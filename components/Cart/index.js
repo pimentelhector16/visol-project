@@ -1,4 +1,4 @@
-import { FaShoppingCart } from "react-icons/fa";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Fade from "react-reveal/Fade";
 import styles from "./cart.module.css";
@@ -6,29 +6,22 @@ import styles from "./cart.module.css";
 export default function index(props) {
   const [state, setState] = useState({ showCheckout: false });
 
-  const [inputState, setInputState] = useState({
-    email: "",
-    nombre: "",
-    direccion: "",
+  const { register, handleSubmit, errors } = useForm({
+    criteriaMode: "all",
   });
 
-  const createOrder = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
+    createOrder(data);
+  };
+
+  const createOrder = (data) => {
     const order = {
-      email: inputState.email,
-      nombre: inputState.nombre,
-      direccion: inputState.direccion,
+      email: data.email,
+      nombre: data.nombre,
+      direccion: data.direccion,
       cartItems: props.cartItems,
     };
     props.createOrder(order);
-  };
-
-  const handleInput = (e) => {
-    e.preventDefault();
-    setInputState({
-      ...inputState,
-      [e.target.name]: e.target.value,
-    });
   };
 
   return (
@@ -138,37 +131,69 @@ export default function index(props) {
           {state.showCheckout && (
             <Fade right cascade>
               <div className={styles.cartForm}>
-                <form onSubmit={createOrder} className={styles.form}>
+                <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                   <ul className={styles.formContainer}>
                     <li>
                       <label>Email</label>
                       <input
                         type="email"
                         name="email"
-                        required
-                        onChange={handleInput}
-                        className="border text-md rounded"
+                        ref={register({
+                          required: true,
+                          pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                        })}
+                        placeholder="Email"
+                        className="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
                       />
+                      {errors?.email?.types?.required && (
+                        <p className="w-full text-center font-bold text-white bg-red-500 rounded-md ">
+                          Este campo es obligatorio.
+                        </p>
+                      )}
+                      {errors?.email?.types?.pattern && (
+                        <p className="w-full text-center font-bold text-white bg-red-500 rounded-md ">
+                          Este campo no es un Correo Válido
+                        </p>
+                      )}
                     </li>
                     <li>
                       <label>Nombre</label>
                       <input
                         type="text"
                         name="nombre"
-                        required
-                        onChange={handleInput}
-                        className="border text-md rounded"
+                        placeholder="Nombre Completo"
+                        ref={register({
+                          required: true,
+                          pattern: /^([a-zA-ZÁÉÍÓÚñáéíóú\s]*)+$/,
+                        })}
+                        className="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
                       />
+                      {errors?.nombre?.types?.required && (
+                        <p className="w-full text-center font-bold text-white bg-red-500 rounded-md ">
+                          Este campo es obligatorio.
+                        </p>
+                      )}
+
+                      {errors?.nombre?.types?.pattern && (
+                        <p className="w-full text-center font-bold text-white bg-red-500 rounded-md ">
+                          Este campo no es Válido
+                        </p>
+                      )}
                     </li>
                     <li>
                       <label>Dirección</label>
                       <input
                         type="text"
                         name="direccion"
-                        required
-                        onChange={handleInput}
-                        className="border  text-md rounded"
+                        placeholder="Dirección"
+                        ref={register({ required: true })}
+                        className="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
                       />
+                      {errors.direccion && (
+                        <div className="w-full text-center font-bold text-white bg-red-500 rounded-md ">
+                          Este campo es Obligatorio.
+                        </div>
+                      )}
                     </li>
                     <li className="text-center">
                       <button

@@ -132,8 +132,8 @@
   width: 40px;
   border-radius: 50%;
   position: absolute;
-  right: 25px;
-  top: 20px;
+  right: 2.4em;
+  top: 2em;
   z-index: 12;
 }
 
@@ -150,8 +150,8 @@
     border-bottom: 1px solid #eee;
     color: #353535;
     display: block;
-    height: 100vh;
-    z-index: 99999;
+    min-height: 100vmax;
+    z-index: 9999999;
     left: -100%;
     position: absolute;
     text-align: center;

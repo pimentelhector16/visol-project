@@ -13,7 +13,11 @@ export default function index() {
         <div className="max-w-6xl m-auto text-gray-800 flex flex-wrap items-center justify-center">
           <div className="p-10 w-50 ">
             <div className="text-xs uppercase text-gray-500 font-medium ">
-              <img src="/visol.png" alt="Logo" className="w-60 h-36" />
+              <Link href="/">
+                <a>
+                  <img src="/visol.png" alt="Logo" className="w-60 h-36" />
+                </a>
+              </Link>
             </div>
           </div>
           <div className="p-10 w-90 ">
@@ -26,12 +30,12 @@ export default function index() {
                 Productos<span className="text-teal-600 text-xs p-1"></span>
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/nosotros">
               <a className="my-3 block" href="/#">
                 Nosotros <span className="text-teal-600 text-xs p-1"></span>
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/contactenos">
               <a className="my-3 block" href="/#">
                 Contactenos
               </a>

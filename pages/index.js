@@ -24,12 +24,12 @@ export default function Home() {
       </Head>
       <header
         id="up"
-        className="bg-center bg-fixed bg-no-repeat bg-cover h-screen relative bg-heropattern"
+        className="h-full w-full bg-center bg-fixed bg-no-repeat bg-cover relative bg-heropattern"
       >
-        <div className="h-screen bg-opacity-20 bg-black flex items-center justify-center">
-          <div className="mx-2 text-center">
+        <div className="w-full bg-opacity-20 bg-black flex items-center justify-center">
+          <div className="p-10 text-center ">
             <div className="flex items-center justify-center ">
-              <img src="./visol.png" alt="logo" className="w-90 h-75" />
+              <img src="./visol.png" alt="logo" className="min-w-50 " />
             </div>
             <Reveal bottom>
               <h2 className="text-white font-extrabold text-3xl xs:text-3xl md:text-3xl leading-tight">

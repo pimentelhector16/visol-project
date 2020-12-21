@@ -6,8 +6,55 @@ import Products from "components/Products";
 import { loadFirebase } from "lib/db";
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css";
+import Router from "next/router";
 
 function index({ products }) {
+  const [loading, setLoading] = useState(false);
+
+  const createOrder = (order) => {
+    const addOrder = (order) => {
+      let firebase = loadFirebase();
+
+      firebase
+        .firestore()
+        .collection("orders")
+        .add({
+          email: order.email,
+          nombre: order.nombre,
+          direccion: order.direccion,
+          cartItems: order.cartItems,
+          createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+        });
+      toaster.notify(() => (
+        <div className="p-2 bg-orange-500 text-white border-orange-500 rounded-md flex flex-column items-center">
+          <span>Se ha registrado el presupuesto correctamente</span>
+        </div>
+      ));
+
+      localStorage.removeItem("cartItems");
+      setState({ ...state, cartItems: [], sort: "", filter: "" });
+      console.log("correct");
+    };
+    addOrder(order);
+  };
+
+  useEffect(() => {
+    const start = () => {
+      setLoading(true);
+    };
+    const end = () => {
+      setLoading(false);
+    };
+    Router.events.on("routeChangeStart", start);
+    Router.events.on("routeChangeComplete", end);
+    Router.events.on("routeChangeError", end);
+    return () => {
+      Router.events.off("routeChangeStart", start);
+      Router.events.off("routeChangeComplete", end);
+      Router.events.off("routeChangeError", end);
+    };
+  }, []);
+
   const [state, setState] = useState({
     products: products,
     cartItems:
@@ -20,9 +67,6 @@ function index({ products }) {
     filter: "",
   });
 
-  const createOrder = (order) => {
-    alert("Necesito procesar orden del cliente: " + order.nombre);
-  };
   const sortProducts = (e) => {
     const sort = e.target.value;
     setState((state) => ({
@@ -90,9 +134,11 @@ function index({ products }) {
       </div>
     ));
   };
+
   useEffect(() => {
     window.localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
   });
+
   const removeFromCart = (product, medida) => {
     const cartItems = state.cartItems.slice();
 
@@ -116,7 +162,7 @@ function index({ products }) {
   };
 
   return (
-    <div className="container mx-auto">
+    <>
       <Head>
         <title>Visol - Productos </title>
         <link rel="icon" href="/favicon.ico" />
@@ -132,42 +178,53 @@ function index({ products }) {
           content="width=device-width, initial-scale=1,  user-scalable=no"
         />
       </Head>
-      {state.products ? (
-        <>
-          <main className="flex-grow flex justify-center items-center ">
-            <div className="mx-auto p-2 text-center ">
-              <div className="grid grid-cols-12 items-start mx-auto p-2">
-                <div className="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 pb-2 min-w-full">
-                  {state.products && (
-                    <Filter
-                      count={state.products.length}
-                      filter={state.filter}
-                      sort={state.sort}
-                      filterProducts={filterProducts}
-                      sortProducts={sortProducts}
-                    />
-                  )}
-
-                  <Products products={state.products} addToCart={addToCart} />
-                </div>
-
-                <div className="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 pb-2">
-                  <Cart
-                    cartItems={state.cartItems}
-                    removeFromCart={removeFromCart}
-                    createOrder={createOrder}
-                  />
-                </div>
-              </div>
-            </div>
-          </main>
-        </>
-      ) : (
+      {loading ? (
         <div className="preloader">
           <div className="loader"></div>
         </div>
+      ) : (
+        <div className="container mx-auto">
+          {state.products ? (
+            <>
+              <main className="flex-grow flex justify-center items-center ">
+                <div className="mx-auto p-2 text-center ">
+                  <div className="grid grid-cols-12 items-start mx-auto p-2">
+                    <div className="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 pb-2 min-w-full">
+                      {state.products && (
+                        <Filter
+                          count={state.products.length}
+                          filter={state.filter}
+                          sort={state.sort}
+                          filterProducts={filterProducts}
+                          sortProducts={sortProducts}
+                        />
+                      )}
+
+                      <Products
+                        products={state.products}
+                        addToCart={addToCart}
+                      />
+                    </div>
+
+                    <div className="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 pb-2">
+                      <Cart
+                        cartItems={state.cartItems}
+                        removeFromCart={removeFromCart}
+                        createOrder={createOrder}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </main>
+            </>
+          ) : (
+            <div className="preloader">
+              <div className="loader"></div>
+            </div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

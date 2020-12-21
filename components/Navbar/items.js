@@ -11,7 +11,7 @@ export const items = [
   },
   {
     title: "Nosotros",
-    url: "/contactenos",
+    url: "/nosotros",
     cName: "navbarLink",
   },
   {

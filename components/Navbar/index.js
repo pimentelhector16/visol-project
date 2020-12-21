@@ -26,10 +26,14 @@ export default function navbar() {
           } `}
         >
           <div className={style.content}>
-            <div className={style.logo_navbar}>
-              <img src="visol2.png" className={style.navbarLogo} />
-              <h1 className="text-white text-bold text-4xl">Visol</h1>
-            </div>
+            <Link href="/">
+              <a>
+                <div className={style.logo_navbar}>
+                  <img src="visol2.png" className={style.navbarLogo} />
+                  <h1 className="text-white text-bold text-4xl">Visol</h1>
+                </div>
+              </a>
+            </Link>
             <ul className={style.menuList}>
               <div
                 className={`${style.icon} ${style.cancelBtn}`}
